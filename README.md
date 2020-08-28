@@ -9,8 +9,8 @@
 
 ## The instruction to use Realsense D435 API
 * **Requirements**
-- Python3
-- pyrealsense2 and numpy library. Can use pip3 to install
+  Python3
+  pyrealsense2 and numpy library. Can use pip3 to install
 
 * **Descriptions**
 
@@ -61,7 +61,8 @@
   ```
 
 * **Example**
-test_realsense_d435.py
+
+  test_realsense_d435.py
 
 
 
