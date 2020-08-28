@@ -13,10 +13,10 @@
 - pyrealsense2 and numpy library. Can use pip3 to install
 
 * **Descriptions**:
-- In Realsense D435 folder contain [**API_realsense_d435.py**](https://github.com/IVSR-SET-HUST/drone-coordinator/blob/sprint_2020-09-15/Realsense%20D435/API_realsense_d435.py) and [**test_realsense_d435.py**](https://github.com/IVSR-SET-HUST/drone-coordinator/blob/sprint_2020-09-15/Realsense%20D435/test_realsense_d435.py)
-- [**API_realsense_d435.py**](https://github.com/IVSR-SET-HUST/drone-coordinator/blob/sprint_2020-09-15/Realsense%20D435/API_realsense_d435.py) is main file, it contain **StreamInfo** and **RealSense2** class
+In Realsense D435 folder contain [**API_realsense_d435.py**](https://github.com/IVSR-SET-HUST/drone-coordinator/blob/sprint_2020-09-15/Realsense%20D435/API_realsense_d435.py) and [**test_realsense_d435.py**](https://github.com/IVSR-SET-HUST/drone-coordinator/blob/sprint_2020-09-15/Realsense%20D435/test_realsense_d435.py)
+[**API_realsense_d435.py**](https://github.com/IVSR-SET-HUST/drone-coordinator/blob/sprint_2020-09-15/Realsense%20D435/API_realsense_d435.py) is main file, it contain **StreamInfo** and **RealSense2** class
 
-- StreamInfo class is used to construct a configuration for camera. A object has attributes: stream type, width, heigh, format, frame rate
+StreamInfo class is used to construct a configuration for camera. A object has attributes: stream type, width, heigh, format, frame rate
 
   streamInfo() method will return a configuration can use for RealSense2 class. If a configuration is false, will return false
   
@@ -32,7 +32,7 @@
 ```
 
 
-- RealSense2 class includes some function: capture(), startRecording(), stopRecording(), updateConfig()
+RealSense2 class includes some function: capture(), startRecording(), stopRecording(), updateConfig()
 
   Initialization function needs three arguments: a configuration list (color, depth or both), path to recording file (string, default is 'record_bag_file.bag'),   device's serial (string, defualt '001622072448')
   
