@@ -17,9 +17,13 @@
 - API_realsense_d435.py is main file, it contain **StreamInfo** and **RealSense2** class
 
 - StreamInfo class is used to construct a configuration for camera. A object has attributes: stream type, width, heigh, format, frame rate
+
   streamInfo() method will return a configuration can use for RealSense2 class. If a configuration is false, will return false
+  
   D435 can get color and depth data. So stream type can be 'color' or 'depth'
+  
   format: 'rgb8' for 'color' and 'z16' for depth
+  
   Example:
   
 ```
