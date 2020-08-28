@@ -64,7 +64,7 @@
 
 * **Example**
 
-  test_realsense_d435.py
+  [test_realsense_d435.py](https://github.com/IVSR-SET-HUST/drone-coordinator/blob/sprint_2020-09-15/Realsense%20D435/test_realsense_d435.py)
 
 
 
