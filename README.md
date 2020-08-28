@@ -32,13 +32,13 @@
   
   ```
   _color = StreamInfo('color', 640, 480, 'bgr8', 30)  
-	   color_stream = _color.streamInfo(), color_stream can use for RealSense2 class
+	   color_stream = _color.streamInfo(), color_stream can be used for RealSense2 class
   ```
 
 
   RealSense2 class includes some function: capture(), startRecording(), stopRecording(), updateConfig()
   
-  Initialization function needs three arguments: a configuration list (color, depth or both), path to recording file (string, default is 'record_bag_file.bag'),   device's serial (string, defualt '001622072448')
+  Initialization function needs three arguments: a configuration list (color, depth or both), path to recording file (string, default is 'record_bag_file.bag'),   device's serial (string, default '001622072448')
   
   Example: rsObj = RealSense2([color_stream], "path to your bag file", "your device's serial")
 
