@@ -40,7 +40,10 @@
   
   Initialization function needs three arguments: a configuration list (color, depth or both), path to recording file (string, default is 'record_bag_file.bag'),   device's serial (string, default '001622072448')
   
-  Example: rsObj = RealSense2([color_stream], "path to your bag file", "your device's serial")
+  Example: 
+  ```
+  rsObj = RealSense2([color_stream], "path to your bag file", "your device's serial")
+  ```
 
   capture() function: can get color, depth numpy data or both. It depends on configuration list. Can't capture when camera is recording. If succeed capture, can get color_frame or depth_frame, if not color_frame or depth_frame is []
   
