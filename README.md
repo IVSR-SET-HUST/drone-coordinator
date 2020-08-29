@@ -7,12 +7,12 @@
 ## Supported Platforms
 * Nvidia Jetson-nano
 
-## The instruction to use Realsense D435 API
+## Instructions for using realsense D435
 * **Requirements**
 
   Python3
   
-  pyrealsense2 and numpy library. Can use pip3 to install
+  Python libraries: pyrealsense2, numpy 
 
 * **Descriptions**
 
