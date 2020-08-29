@@ -32,7 +32,7 @@
   
   ```
   _color = StreamInfo('color', 640, 480, 'bgr8', 30)  
-	   color_stream = _color.streamInfo(), color_stream can be used for RealSense2 class
+  color_stream = _color.streamInfo(), color_stream can be used for RealSense2 class
   ```
 
 
