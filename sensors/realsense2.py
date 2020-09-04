@@ -57,18 +57,6 @@ class RealSense2:
             self.types.append(streamInfo['streamType'])
 
 
-    def record(self, max_recordTime):
-        self.config.enable_record_to_file(self.recordFilePath)
-        self.pipeline.start(self.config)
-        record_thread = threading.Timer(max_recordTime, self.stopRecording)
-        record_thread.start()
-        while True:
-            if not self.lock.locked():
-                break
-        record_thread.cancel()
-        self.pipeline.stop()
-
-
     def capture(self):
         if self.lock.locked():
             return False
@@ -90,24 +78,30 @@ class RealSense2:
                     continue
                 break
         finally:
+            print('Capture successfully')
             self.pipeline.stop()
-            print('Succeed capture')
             self.lock.release()
 
     def startRecording(self, max_recordTime):
         if self.lock.locked():
+            print('Device is busy')
             return False
         self.lock.acquire()
-        threading.Thread(target=self.record, args=(max_recordTime, )).start()
+        self.config.enable_record_to_file(self.recordFilePath)
+        self.pipeline.start(self.config)
+        record_thread = threading.Timer(max_recordTime, self.stopRecording)
+        record_thread.start()
 
     def stopRecording(self):
         if not self.lock.locked():
             return False
+        print('Stop recording')
         self.lock.release()
+        self.pipeline.stop()
 
     def updateConfig(self, _streamInfos):
         if self.lock.locked():
-            print("Is recording, can't change configuration")
+            print("Is recording, you can't change the configuration")
             return False
 
         self.streamInfos = _streamInfos
@@ -116,6 +110,7 @@ class RealSense2:
             self.config.enable_stream(streamInfo['streamType'], streamInfo['width'], streamInfo['height'],
                                       streamInfo['format'], streamInfo['frameRate'])
             self.types.append(streamInfo['streamType'])
+
 
 
 
