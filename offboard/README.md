@@ -1,7 +1,7 @@
 # Offboard package for control drone
 
 ## Include
-- Hovering control: takeoff_node.cpp
+- Hovering control: takeoff\_node.cpp
 - _ongoing_
 
 ## Required
@@ -11,9 +11,10 @@
 - **mavlink**: at `catkin_ws/src/mavlink`
 
 ## Build offboard
-** Init offboard package and create takeoff_node.cpp **
-- `cd _[path/to/catkin_ws]_/src/`
-- `catkin_create_package offboard rospy roscpp std_msgs mavros_msgs geometry_msgs`
-- copy takeoff_node.cpp to `_[path/to/catkin_ws]_/src/offboard/src/`
-- copy package.xml and CMakelists.txt to `_[path/to/catkin_ws]_/src/offboard`
+**Init offboard package and create takeoff\_node.cpp**
+- `cd [path/to/catkin_ws]/src/`
+- `catkin\_create\_package offboard rospy roscpp std_msgs mavros_msgs geometry_msgs`
+- copy takeoff\_node.cpp to `[path/to/catkin_ws]/src/offboard/src/`
+- copy and replace package.xml and CMakelists.txt to `[path/to/catkin_ws]/src/offboard`
 - `catkin build offboard`
+- `source [path/to/catkin_ws]/devel/setup.bash`
