@@ -2,7 +2,7 @@
 
 ## Include
 - Hovering control: takeoff\_node.cpp
-- _ongoing_
+- [_ongoing_]
 
 ## Required
 - **ros**: Melodic (on Ubuntu 18.04)
@@ -13,7 +13,7 @@
 ## Build offboard
 **Init offboard package and create takeoff\_node.cpp**
 - `cd [path/to/catkin_ws]/src/`
-- `catkin\_create\_package offboard rospy roscpp std_msgs mavros_msgs geometry_msgs`
+- `catkin_create_package offboard rospy roscpp std_msgs mavros_msgs geometry_msgs`
 - copy takeoff\_node.cpp to `[path/to/catkin_ws]/src/offboard/src/`
 - copy and replace package.xml and CMakelists.txt to `[path/to/catkin_ws]/src/offboard`
 - `catkin build offboard`
