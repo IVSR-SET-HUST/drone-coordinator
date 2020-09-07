@@ -1,7 +1,10 @@
 # Offboard package for control drone
 
 ## Include
-- Hovering control: takeoff\_node.cpp
+- manifests: package.xml
+- CMake: CMakeLists.txt
+- Takeoff source: takeoff\_node.cpp
+- 
 - [_ongoing_]
 
 ## Required
