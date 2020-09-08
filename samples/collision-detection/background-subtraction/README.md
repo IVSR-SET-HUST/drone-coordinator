@@ -10,11 +10,11 @@
 
 * **Descriptions**
   
-  [**getdata.py**]() gets depth and color frame from D435 camera and saves to your data folder
+  [**getdata.py**](samples/collision-detection/background-subtraction/python/getdata/getdata.py) gets depth and color frame from D435 camera and saves to your data folder
   
-  [**read_depth_mat_v2.m**]() loads data, uses background subtraction algorithm and saves image result to your result folder
+  [**read_depth_mat_v2.m**](samples/collision-detection/background-subtraction/octave/read_depth_mat_v2.m) loads data, uses background subtraction algorithm and saves image result to your result folder
 
-  [**bounding_box.m**]() bounding box function, using on **read_depth_mat_v2.m** to bound detected object
+  [**bounding_box.m**](samples/collision-detection/background-subtraction/octave/bounding_box.m) bounding box function, using on **read_depth_mat_v2.m** to bound detected object
   
 * **Scenario**
  
