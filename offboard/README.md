@@ -21,3 +21,11 @@
 - copy and replace package.xml and CMakelists.txt to `[path/to/catkin_ws]/src/offboard`
 - `catkin build offboard`
 - `source [path/to/catkin_ws]/devel/setup.bash`
+
+## Usage
+- _connect jetson to pixhawk_         : `roslaunch mavros px4.launch`
+- _check drone state_                 : `rostopic echo /mavros/state`
+- _check drone current local position_: `rostopic echo /mavros/local_position/pose`
+
+- _run takeoff_node_                 : `rosrun offboard takeoff_node`
+- **on remote controller** switch to ARM, then switch flight mode to OFFBOARD
