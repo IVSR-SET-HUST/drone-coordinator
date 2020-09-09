@@ -1,7 +1,7 @@
 #include <ros/ros.h>
 #include <geometry_msgs/PoseStamped.h>
-#include <mavros_msgs/CommandBool.h>
 #include <mavros_msgs/State.h>
+#include <iostream>
 
 mavros_msgs::State current_state;
 void state_cb(const mavros_msgs::State::ConstPtr& msg){
@@ -18,10 +18,8 @@ int main(int argc, char **argv)
             ("mavros/state", 10, state_cb);
     ros::Publisher local_pos_pub = nh.advertise<geometry_msgs::PoseStamped>
             ("mavros/setpoint_position/local", 10);
-    //ros::ServiceClient arming_client = nh.serviceClient<mavros_msgs::CommandBool>
-    //        ("mavros/cmd/arming");
-
-    //the setpoint publishing rate MUST be faster than 2Hz
+    
+    // the setpoint publishing rate MUST be faster than 2Hz
     ros::Rate rate(20.0);
 
     // wait for FCU connection
@@ -30,27 +28,31 @@ int main(int argc, char **argv)
         rate.sleep();
     }
     
+    // input target local position from user
+    int x,y, z;
+    ROS_INFO("Input target local position: ");
+    std::cout << "x: "; std::cin >> x;
+    std::cout << "y: "; std::cin >> y;
+    std::cout << "z: "; std::cin >> z;
+
     //set target position
-    geometry_msgs::PoseStamped pose;
-    pose.pose.position.x = 0;
-    pose.pose.position.y = 0;
-    pose.pose.position.z = 2;
+    geometry_msgs::PoseStamped target_pose;
+    target_pose.pose.position.x = x;
+    target_pose.pose.position.y = y;
+    target_pose.pose.position.z = z;
     
     //send a few setpoints before starting
     for(int i = 100; ros::ok() && i > 0; --i){
-        local_pos_pub.publish(pose);
+        local_pos_pub.publish(target_pose);
         ros::spinOnce();
         rate.sleep();
     }
-    
-    //mavros_msgs::CommandBool arm_cmd;
-    //arm_cmd.request.value = true;
     
     ros::Time last_request = ros::Time::now();
 
     while(ros::ok()){
         //publish target position to pixhawk
-	local_pos_pub.publish(pose);
+	local_pos_pub.publish(target_pose);
 
         ros::spinOnce();
         rate.sleep();
