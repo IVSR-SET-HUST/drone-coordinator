@@ -8,14 +8,23 @@ void state_cb(const mavros_msgs::State::ConstPtr& msg){
     current_state = *msg;
 }
 
+geometry_msgs::PoseStamped current_pose;
+void pose_cb(const geometry_msgs::PoseStamped::ConstPtr& msg){
+    current_pose = *msg;
+}
+
 int main(int argc, char **argv)
 {
-    // init ros node anf node handle
+    // init ros node and node handle
     ros::init(argc, argv, "takeoff_node");
     ros::NodeHandle nh;
-    // init subscriber and publisher
+    // subscriber 
     ros::Subscriber state_sub = nh.subscribe<mavros_msgs::State>
             ("mavros/state", 10, state_cb);
+    ros::Subscriber local_pose_sub = nh.subscribe<geometry_msgs::PoseStamped>
+            ("mavros/local_position/pose", 10, pose_cb);
+	
+    // publisher
     ros::Publisher local_pos_pub = nh.advertise<geometry_msgs::PoseStamped>
             ("mavros/setpoint_position/local", 10);
     
@@ -27,21 +36,18 @@ int main(int argc, char **argv)
         ros::spinOnce();
         rate.sleep();
     }
-    
-    // input target local position from user
-    int x,y, z;
-    ROS_INFO("Input target local position: ");
-    std::cout << "x: "; std::cin >> x;
-    std::cout << "y: "; std::cin >> y;
-    std::cout << "z: "; std::cin >> z;
-
-    //set target position
+   
+    // set target position
     geometry_msgs::PoseStamped target_pose;
-    target_pose.pose.position.x = x;
-    target_pose.pose.position.y = y;
-    target_pose.pose.position.z = z;
+    //target_pose.pose.position.x = x;
+    //target_pose.pose.position.y = y;
+    //target_pose.pose.position.z = z;
+    std::cout << "Input target: " << std::endl;
+    std::cout << "x: "; std::cin >> target_pose.pose.position.x;  
+    std::cout << "y: "; std::cin >> target_pose.pose.position.y;
+    std::cout << "z: "; std::cin >> target_pose.pose.position.z;
     
-    //send a few setpoints before starting
+    // send a few setpoints before starting
     for(int i = 100; ros::ok() && i > 0; --i){
         local_pos_pub.publish(target_pose);
         ros::spinOnce();
@@ -50,7 +56,13 @@ int main(int argc, char **argv)
     
     ros::Time last_request = ros::Time::now();
 
-    while(ros::ok()){
+    while(ros::ok())
+    {
+	// check state and position
+	ROS_INFO_STREAM("\nCurrent position: \n" << current_pose.pose.position);	
+	ROS_INFO_STREAM("\nCurrent state: \n" << current_state);
+	ROS_INFO_STREAM("\nTarget position: \n" << target_pose.pose.position);
+
         //publish target position to pixhawk
 	local_pos_pub.publish(target_pose);
 
