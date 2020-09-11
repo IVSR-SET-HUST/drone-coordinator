@@ -36,19 +36,25 @@ int main(int argc, char **argv)
         ros::spinOnce();
         rate.sleep();
     }
-   
+	
+    // check current state and position
+    for(int i = 10; ros::ok() && i > 0; --i)
+    {
+	ROS_INFO_STREAM("Current state: " << current_state);
+	ROS_INFO_STREAM("Current pose: " << current_pose.pose.position);	
+	ros::spinOnce();
+        rate.sleep();
+    }
+
     // set target position
     geometry_msgs::PoseStamped target_pose;
-    //target_pose.pose.position.x = x;
-    //target_pose.pose.position.y = y;
-    //target_pose.pose.position.z = z;
     std::cout << "Input target: " << std::endl;
     std::cout << "x: "; std::cin >> target_pose.pose.position.x;  
     std::cout << "y: "; std::cin >> target_pose.pose.position.y;
     std::cout << "z: "; std::cin >> target_pose.pose.position.z;
     
     // send a few setpoints before starting
-    for(int i = 100; ros::ok() && i > 0; --i){
+    for(int i = 10; ros::ok() && i > 0; --i){
         local_pos_pub.publish(target_pose);
         ros::spinOnce();
         rate.sleep();
@@ -58,7 +64,7 @@ int main(int argc, char **argv)
 
     while(ros::ok())
     {
-	// check state and position
+	// print state and position
 	ROS_INFO_STREAM("\nCurrent position: \n" << current_pose.pose.position);	
 	ROS_INFO_STREAM("\nCurrent state: \n" << current_state);
 	ROS_INFO_STREAM("\nTarget position: \n" << target_pose.pose.position);
