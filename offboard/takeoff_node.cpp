@@ -40,8 +40,8 @@ int main(int argc, char **argv)
     // check current state and position
     for(int i = 10; ros::ok() && i > 0; --i)
     {
-	ROS_INFO_STREAM("Current state: " << current_state);
-	ROS_INFO_STREAM("Current pose: " << current_pose.pose.position);	
+	ROS_INFO_STREAM("\nCurrent state: \n" << current_state);
+	ROS_INFO_STREAM("\nCurrent pose: \n" << current_pose.pose.position);	
 	ros::spinOnce();
         rate.sleep();
     }
