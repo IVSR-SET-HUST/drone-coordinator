@@ -10,11 +10,11 @@
 
 * **Descriptions**
   
-  [**createArucoMarker.py**](./landing/createArucoMarker.py) define, create type of marker and save markers image to your data folder
+  [**createArucoMarker.py**](./createArucoMarker.py) define, create type of marker and save markers image to your data folder
   
-  [**cameraCalibration.py**](./landing/cameraCalibration.py) get the matrix camera and distortion vector to calculate the translation vector and rotation vector
+  [**cameraCalibration.py**](./cameraCalibration.py) get the matrix camera and distortion vector to calculate the translation vector and rotation vector
 
-  [**detectMarker.py**](./landing/checkMarker.py) bounding marker, return the identity of marker, distance from center camera to the centre of marker and orientation from the camera to marker
+  [**detectMarker.py**](./checkMarker.py) bounding marker, return the identity of marker, distance from center camera to the centre of marker and orientation from the camera to marker
   
 * **Scenario**
 
