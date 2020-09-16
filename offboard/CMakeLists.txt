@@ -27,14 +27,14 @@ include_directories(
 # )
 
 ## Add executable for takeoff_node
-#add_executable(${PROJECT_NAME}_node src/offboard_node.cpp)
-add_executable(takeoff_node src/takeoff_node.cpp)
+#add_executable(offboard src/offboard_node.cpp)
+add_executable(hovering src/hovering_node.cpp)
 
 # add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
-# target_link_libraries(${PROJECT_NAME}_node
+# target_link_libraries(offboard
 #  ${catkin_LIBRARIES}
 #)
-target_link_libraries(takeoff_node
+target_link_libraries(hovering
   ${catkin_LIBRARIES}
 )
