@@ -16,7 +16,7 @@ void pose_cb(const geometry_msgs::PoseStamped::ConstPtr& msg){
 int main(int argc, char **argv)
 {
     // init ros node and node handle
-    ros::init(argc, argv, "takeoff_node");
+    ros::init(argc, argv, "hovering");
     ros::NodeHandle nh;
     // subscriber 
     ros::Subscriber state_sub = nh.subscribe<mavros_msgs::State>
