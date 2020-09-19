@@ -21,20 +21,13 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-## Declare a C++ library
-# add_library(${PROJECT_NAME}
-#   src/${PROJECT_NAME}/offboard.cpp
-# )
-
-## Add executable for takeoff_node
-#add_executable(offboard src/offboard_node.cpp)
+## Add executable
+add_executable(offboard src/offboard_node.cpp)
 add_executable(hovering src/hovering_node.cpp)
 
-# add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-
-# target_link_libraries(offboard
-#  ${catkin_LIBRARIES}
-#)
+target_link_libraries(offboard
+ ${catkin_LIBRARIES}
+)
 target_link_libraries(hovering
   ${catkin_LIBRARIES}
 )
