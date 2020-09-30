@@ -1,0 +1,4 @@
+<launch>
+    <!-- <include file="$(find mavros)/launch/px4.launch"> </include> -->
+    <node pkg="offboard" type="offboard" name="offboard" output="screen"></node>
+</launch>
