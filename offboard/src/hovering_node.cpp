@@ -46,10 +46,11 @@ int main(int argc, char **argv)
     }
 
     geometry_msgs::PoseStamped target_pose;
-
-	std::cout << "Input target: " << std::endl;
-	std::cout << "x: "; std::cin >> target_pose.pose.position.x;
-	std::cout << "y: "; std::cin >> target_pose.pose.position.y;
+    target_pose.pose.position.x = current_pose.pose.position.x;
+    target_pose.pose.position.y = current_pose.pose.position.y;
+	std::cout << "Input hight target: " << std::endl;
+	// std::cout << "x: "; std::cin >> target_pose.pose.position.x;
+	// std::cout << "y: "; std::cin >> target_pose.pose.position.y;
 	std::cout << "z: "; std::cin >> target_pose.pose.position.z;
 
     // send a few setpoints before starting
@@ -62,9 +63,9 @@ int main(int argc, char **argv)
     ros::Time last_request = ros::Time::now();
 
     while(ros::ok()){
-		ROS_INFO_STREAM("\nCurrent position: \n" << current_pose.pose.position);	
-	    ROS_INFO_STREAM("\nCurrent state: \n" << current_state);
-		ROS_INFO_STREAM("\nTarget position: \n" << target_pose.pose.position);
+		ROS_INFO_STREAM("\nCurrent state: \n" << current_state);
+        ROS_INFO_STREAM("\nCurrent position: \n" << current_pose.pose.position);	
+	    // ROS_INFO_STREAM("\nTarget position: \n" << target_pose.pose.position);
 
         local_pos_pub.publish(target_pose);
         ros::spinOnce();
