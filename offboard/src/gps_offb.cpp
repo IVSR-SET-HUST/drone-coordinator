@@ -4,7 +4,7 @@
 void globalPosition_cb(const sensor_msgs::NavSatFix::ConstPtr& msg) {
     global_position = *msg;
     global_position_received = true;
-    ROS_INFO_ONCE("Got global position: [%.2f, %.2f, %.2f]", msg->latitude, msg->longitude, msg->altitude);
+    ROS_INFO_ONCE("Got global position: [%f, %f, %f]", msg->latitude, msg->longitude, msg->altitude);
 }
 
 void state_cb(const mavros_msgs::State::ConstPtr& msg) {
@@ -40,10 +40,13 @@ int main(int argc, char **argv) {
     ROS_INFO("GPS position received");
 
     // set target position
-    mavros_msgs::GlobalPositionTarget goal_position;
-    goal_position.latitude = global_position.latitude;
-    goal_position.longitude = global_position.longitude;
-    goal_position.altitude = global_position.altitude;
+    // goal_position.latitude = global_position.latitude;
+    // goal_position.longitude = global_position.longitude;
+    // goal_position.altitude = global_position.altitude;
+    input_global_target();
+    goal_position.latitude = latitude;
+    goal_position.longitude = longitude;
+    goal_position.altitude = altitude;
 
     // send a few setpoints before starting
     for (int i=10; ros::ok() && i>0; --i) {
@@ -54,16 +57,21 @@ int main(int argc, char **argv) {
     }
 
     // take off to 5m above ground
-    goal_position.altitude = goal_position.altitude + 2.0;
-    goal_position.latitude = goal_position.latitude + 0.00001;
-    goal_position.longitude = goal_position.longitude + 0.00001;
+    // goal_position.altitude = goal_position.altitude + 5.0;
+    // goal_position.latitude = goal_position.latitude + 0.00001;
+    // goal_position.longitude = goal_position.longitude + 0.00001;
+
     while (ros::ok()) {
         goal_position.header.stamp = ros::Time::now();
         goal_pos_pub.publish(goal_position);
+        // std::cout << "Latitude " << global_position.latitude << std::endl;
+        // std::cout << "Longitude " << global_position.longitude << std::endl;
+        // std::cout << "Altitude " << global_position.altitude << std::endl;
+        dist = measureGPS(global_position.latitude, global_position.longitude, latitude, longitude);
+        // std::cout << "Distance to target " << dist << " m" << std::endl;
+        std::printf("Distance to target: %.2f m \n", dist);
         ros::spinOnce();
-        ROS_INFO_THROTTLE(5, "At altitude %.2f", global_position.altitude);
         rate.sleep();
     }
-
     return 0;
 }
