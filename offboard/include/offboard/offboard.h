@@ -9,44 +9,51 @@
 #include <mavros_msgs/SetMode.h>
 #include <mavros_msgs/GlobalPositionTarget.h>
 #include <sensor_msgs/NavSatFix.h>
-#include <tf2_geometry_msgs/tf2_geometry_msgs.h>
-#include <tf2/LinearMath/Quaternion.h>
-#include <tf2/convert.h>
 
 #include <iostream>
 #include <cmath>
+#include <cstdio>
 
 const double PI  =3.141592653589793238463;
+const double eR  =6378.137; //km
 
 bool check_position(void);
 bool check_orientation(void);
-void input_target(void);
+
+void input_local_target(void);
+void input_global_target(void);
+
 double degree(double);
 double radian(double);
+
+double measureGPS(double, double, double, double);
 
 mavros_msgs::State current_state;
 geometry_msgs::PoseStamped current_pose;
 geometry_msgs::PoseStamped target_pose;
 
-sensor_msgs::NavSatFix global_position;
 bool global_position_received = false;
+sensor_msgs::NavSatFix global_position;
+mavros_msgs::GlobalPositionTarget goal_position;
+
+tf::Quaternion q;
 
 int target_num;
-// float target_pos[10][3];
 float target_pos[10][7];
-tf::Quaternion q;
 double roll, pitch, yaw;
 double r, p, y;
+
+double latitude, longitude, altitude, dist;
 
 bool check_position()
 {
 	bool reached;
 	if(((target_pose.pose.position.x - 0.1) < current_pose.pose.position.x)
-	 && (current_pose.pose.position.x < (target_pose.pose.position.x + 0.1)) 
-	 && ((target_pose.pose.position.y - 0.1) < current_pose.pose.position.y)
-	 && (current_pose.pose.position.y < (target_pose.pose.position.y + 0.1))
-	 && ((target_pose.pose.position.z - 0.1) < current_pose.pose.position.z)
-	 && (current_pose.pose.position.z < (target_pose.pose.position.z + 0.1)))
+	&& (current_pose.pose.position.x < (target_pose.pose.position.x + 0.1)) 
+	&& ((target_pose.pose.position.y - 0.1) < current_pose.pose.position.y)
+	&& (current_pose.pose.position.y < (target_pose.pose.position.y + 0.1))
+	&& ((target_pose.pose.position.z - 0.1) < current_pose.pose.position.z)
+	&& (current_pose.pose.position.z < (target_pose.pose.position.z + 0.1)))
 	{
 		reached = 1;
 	}
@@ -61,16 +68,6 @@ bool check_position()
 bool check_orientation()
 {
 	bool reached;
-	
-	// if(((target_pose.pose.orientation.x - 0.1) < current_pose.pose.orientation.x)
-	//  && (current_pose.pose.orientation.x < (target_pose.pose.orientation.x + 0.1)) 
-	//  && ((target_pose.pose.orientation.y - 0.1) < current_pose.pose.orientation.y)
-	//  && (current_pose.pose.orientation.y < (target_pose.pose.orientation.y + 0.1))
-	//  && ((target_pose.pose.orientation.z - 0.1) < current_pose.pose.orientation.z)
-	//  && (current_pose.pose.orientation.z < (target_pose.pose.orientation.z + 0.1))
-	//  && ((target_pose.pose.orientation.w - 0.1) < current_pose.pose.orientation.w)
-	//  && (current_pose.pose.orientation.w < (target_pose.pose.orientation.w + 0.1)))
-	
 	// tf Quaternion to RPY
 	tf::Quaternion qc(
 		current_pose.pose.orientation.x,
@@ -89,7 +86,7 @@ bool check_orientation()
 	tf::Matrix3x3 mt(qt);
 	double rt, pt, yt;
 	mt.getRPY(rt, pt, yt);
-	
+	// check
 	if((((degree(rt)-1)<(degree(rc)))&&(degree(rc)<(degree(rt)+1)))
 	 &&(((degree(pt)-1)<(degree(pc)))&&(degree(pc)<(degree(pt)+1)))
 	 &&(((degree(yt)-1)<(degree(yc)))&&(degree(yc)<(degree(yt)+1)))) 
@@ -104,13 +101,13 @@ bool check_orientation()
 }
 
 
-void input_target()
+void input_local_target()
 {
 	std::cout << "Input target(s) position:" << std::endl;
 	std::cout << "Number of target(s): "; std::cin >> target_num;
 	for (int i = 0; i < target_num; i++)
 	{
-		std::cout << "Target (" << i+1 << ") position:" <<std::endl; 
+		std::cout << "Target (" << i+1 << ") position (meter):" <<std::endl; 
 		std::cout << "pos_x_" << i+1 << ":"; std::cin >> target_pos[i][0];
 		std::cout << "pos_y_" << i+1 << ":"; std::cin >> target_pos[i][1];
 		std::cout << "pos_z_" << i+1 << ":"; std::cin >> target_pos[i][2];
@@ -121,10 +118,20 @@ void input_target()
 		// std::cout << "ort_z_" << i+1 << ":"; std::cin >> target_pos[i][5];
 		// std::cout << "ort_w_" << i+1 << ":"; std::cin >> target_pos[i][6];
 		std::cout << "Target (" << i+1 << ") orientation (degree):" <<std::endl; 
-		std::cout << "roll_" << i+1 << ":"; std::cin >> target_pos[i][3];
-		std::cout << "pitch_" << i+1 << ":"; std::cin >> target_pos[i][4];
+		// std::cout << "roll_" << i+1 << ":"; std::cin >> target_pos[i][3];
+		// std::cout << "pitch_" << i+1 << ":"; std::cin >> target_pos[i][4];
+		target_pos[i][3] = 0;
+		target_pos[i][4] = 0;
 		std::cout << "yaw_" << i+1 << ":"; std::cin >> target_pos[i][5];
 	}
+}
+
+void input_global_target()
+{
+	std::cout << "Input GPS position" << std::endl;
+	std::cout << "Latitude  (degree):"; std::cin >> latitude;
+	std::cout << "Longitude (degree):"; std::cin >> longitude;
+	std::cout << "Altitude  (meter) :"; std::cin >> altitude;
 }
 
 double degree(double rad)
@@ -137,4 +144,13 @@ double radian(double deg)
 {
 	double degree_to_radian = (deg*PI)/180;
 	return degree_to_radian;
+}
+
+double measureGPS(double lat1, double lon1, double lat2, double lon2)
+{
+	double distance;
+	lat1 = radian(lat1); lon1 = radian(lon1);
+	lat2 = radian(lat2); lon2 = radian(lon2);
+	distance = 2*eR*asin(sqrt(sin((lat2-lat1)/2)*sin((lat2-lat1)/2)+cos(lat1)*cos(lat2)*sin((lon2-lon1)/2)*sin((lon2-lon1)/2)))*1000; //m
+	return distance;
 }
