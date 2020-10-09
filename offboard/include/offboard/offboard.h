@@ -14,9 +14,11 @@
 #include <cmath>
 #include <cstdio>
 
+/****** DEFINE CONSTANTS ******/
 const double PI  =3.141592653589793238463;
 const double eR  =6378.137; //km
 
+/****** DEFINE FUNCTIONS ******/
 bool check_position(void);
 bool check_orientation(void);
 
@@ -28,13 +30,15 @@ double radian(double);
 
 double measureGPS(double, double, double, double);
 
+/****** DECLARE VARIANTS ******/
 mavros_msgs::State current_state;
 geometry_msgs::PoseStamped current_pose;
 geometry_msgs::PoseStamped target_pose;
 
 bool global_position_received = false;
 sensor_msgs::NavSatFix global_position;
-mavros_msgs::GlobalPositionTarget goal_position;
+// mavros_msgs::GlobalPositionTarget goal_position;
+geographic_msgs::GeoPoseStamped goal_position;
 
 tf::Quaternion q;
 
@@ -45,6 +49,11 @@ double r, p, y;
 
 double latitude, longitude, altitude, dist;
 
+/****** FUNCTIONS ******/
+
+/****************************************************************************************************/
+/***** check_position: check when drone reached the target positions. return the true or false ******/
+/****************************************************************************************************/
 bool check_position()
 {
 	bool reached;
@@ -64,7 +73,9 @@ bool check_position()
 	return reached;
 }
 
-
+/**********************************************************************************************************/
+/***** check_orientation: check when drone reached the target orientations. return the true or false ******/
+/**********************************************************************************************************/
 bool check_orientation()
 {
 	bool reached;
@@ -100,7 +111,10 @@ bool check_orientation()
 	return reached;
 }
 
-
+/**************************************************************************/
+/***** input_local_target: input the number of waypoints and each point   *
+ * coodinates (x, y, z). and input the yaw rotation at each waypoint ******/
+/**************************************************************************/
 void input_local_target()
 {
 	std::cout << "Input target(s) position:" << std::endl;
@@ -111,21 +125,17 @@ void input_local_target()
 		std::cout << "pos_x_" << i+1 << ":"; std::cin >> target_pos[i][0];
 		std::cout << "pos_y_" << i+1 << ":"; std::cin >> target_pos[i][1];
 		std::cout << "pos_z_" << i+1 << ":"; std::cin >> target_pos[i][2];
-		
-		// std::cout << "Target (" << i+1 << ") orientation:" <<std::endl; 
-		// std::cout << "ort_x_" << i+1 << ":"; std::cin >> target_pos[i][3];
-		// std::cout << "ort_y_" << i+1 << ":"; std::cin >> target_pos[i][4];
-		// std::cout << "ort_z_" << i+1 << ":"; std::cin >> target_pos[i][5];
-		// std::cout << "ort_w_" << i+1 << ":"; std::cin >> target_pos[i][6];
+
 		std::cout << "Target (" << i+1 << ") orientation (degree):" <<std::endl; 
-		// std::cout << "roll_" << i+1 << ":"; std::cin >> target_pos[i][3];
-		// std::cout << "pitch_" << i+1 << ":"; std::cin >> target_pos[i][4];
 		target_pos[i][3] = 0;
 		target_pos[i][4] = 0;
 		std::cout << "yaw_" << i+1 << ":"; std::cin >> target_pos[i][5];
 	}
 }
 
+/*************************************************************************************/
+/***** input_global_target: input the GPS [latitude, longitude, altitude] point ******/
+/*************************************************************************************/
 void input_global_target()
 {
 	std::cout << "Input GPS position" << std::endl;
@@ -134,18 +144,27 @@ void input_global_target()
 	std::cout << "Altitude  (meter) :"; std::cin >> altitude;
 }
 
+/**********************************************************/
+/***** degree: convert angle from radian to degree ******/
+/**********************************************************/
 double degree(double rad)
 {
 	double radian_to_degree = (rad*180)/PI;
 	return radian_to_degree;
 }
 
+/**********************************************************/
+/***** radian: convert angle from degree to radian ******/
+/**********************************************************/
 double radian(double deg)
 {
 	double degree_to_radian = (deg*PI)/180;
 	return degree_to_radian;
 }
 
+/*********************************************************************************************/
+/***** measureGPS: measure the distance between 2 GPS points that use haversine formula ******/
+/*********************************************************************************************/
 double measureGPS(double lat1, double lon1, double lat2, double lon2)
 {
 	double distance;
