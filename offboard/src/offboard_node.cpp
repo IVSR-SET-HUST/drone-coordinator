@@ -1,25 +1,31 @@
 #include "offboard/offboard.h"
 
 // state callback 
-void state_cb(const mavros_msgs::State::ConstPtr& msg){
+void state_cb(const mavros_msgs::State::ConstPtr& msg)
+{
     current_state = *msg;
 }
 
 // pose callback
-void pose_cb(const geometry_msgs::PoseStamped::ConstPtr& msg){
+void pose_cb(const geometry_msgs::PoseStamped::ConstPtr& msg)
+{
     current_pose = *msg;
 }
 
+// main function
 int main(int argc, char **argv)
 {
+    // initialize ros node
     ros::init(argc, argv, "offboard");
     ros::NodeHandle nh;
 
+    // subscriber
     ros::Subscriber state_sub = nh.subscribe<mavros_msgs::State>
             ("mavros/state", 10, state_cb);
     ros::Subscriber local_pose_sub = nh.subscribe<geometry_msgs::PoseStamped>
             ("mavros/local_position/pose", 10, pose_cb);
     
+    // publisher
     ros::Publisher local_pos_pub = nh.advertise<geometry_msgs::PoseStamped>
             ("mavros/setpoint_position/local", 10);
 
@@ -29,16 +35,16 @@ int main(int argc, char **argv)
     // wait for FCU connection
     while(ros::ok() && current_state.connected)
 	{
+        ROS_INFO_ONCE("Waiting for FCU connection ...");
         ros::spinOnce();
         rate.sleep();
     }
     ROS_INFO("FCU connected");
 
-	// check current state and position
+	// check current pose
 	for(int i = 10; ros::ok() && i > 0; --i)
 	{
-		ROS_INFO_STREAM("\nCurrent state: \n" << current_state);
-		ROS_INFO_STREAM("\nCurrent pose: \n" << current_pose.pose);
+		ROS_INFO_STREAM("\nCurrent position: \n" << current_pose.pose.position);
 
 		// tf Quaternion to RPY
 		tf::Quaternion qc(
@@ -58,36 +64,31 @@ int main(int argc, char **argv)
         rate.sleep();
     }
 
+    // set target pose
 	input_local_target();
     target_pose.pose.position.x = target_pos[0][0];
     target_pose.pose.position.y = target_pos[0][1];
     target_pose.pose.position.z = target_pos[0][2];
-	
-    // target_pose.pose.orientation.x = target_pos[0][3];
-    // target_pose.pose.orientation.y = target_pos[0][4];
-    // target_pose.pose.orientation.z = target_pos[0][5];
-    // target_pose.pose.orientation.w = target_pos[0][6];
-
     roll  = radian(target_pos[0][3]);
     pitch = radian(target_pos[0][4]);
     yaw   = radian(target_pos[0][5]);
-
     q.setRPY(roll, pitch, yaw);
 	tf::quaternionTFToMsg(q, target_pose.pose.orientation);
 
-
     // send a few setpoints before starting
-    for(int i = 10; ros::ok() && i > 0; --i){
+    for(int i = 10; ros::ok() && i > 0; --i)
+    {
+        target_pose.header.stamp = ros::Time::now();
         local_pos_pub.publish(target_pose);
         ros::spinOnce();
         rate.sleep();
     }
+    ROS_INFO("Ready");
     
     int i = 0;
     while(ros::ok())
     {
-		ROS_INFO_STREAM("\nCurrent position: \n" << current_pose.pose);	
-		ROS_INFO_STREAM("\nTarget position: \n" << target_pose.pose);
+		ROS_INFO_STREAM("\nCurrent position: \n" << current_pose.pose.position);
 
 		// tf Quaternion to RPY
 		tf::Quaternion qc(
@@ -109,19 +110,13 @@ int main(int argc, char **argv)
             target_pose.pose.position.x = target_pos[i][0];
             target_pose.pose.position.y = target_pos[i][1];
             target_pose.pose.position.z = target_pos[i][2];
-			
-            // target_pose.pose.orientation.x = target_pos[i][3];
-            // target_pose.pose.orientation.y = target_pos[i][4];
-            // target_pose.pose.orientation.z = target_pos[i][5];
-            // target_pose.pose.orientation.w = target_pos[i][6];
-			
             roll  = radian(target_pos[i][3]);
             pitch = radian(target_pos[i][4]);
             yaw   = radian(target_pos[i][5]);
-
             q.setRPY(roll, pitch, yaw);
 	        tf::quaternionTFToMsg(q, target_pose.pose.orientation);
 
+            target_pose.header.stamp = ros::Time::now();
             local_pos_pub.publish(target_pose);
 			ros::spinOnce();
         	rate.sleep();
@@ -132,36 +127,32 @@ int main(int argc, char **argv)
             // target_pose.pose.position.x = target_pos[0][0];
             // target_pose.pose.position.y = target_pos[0][1];
             // target_pose.pose.position.z = target_pos[0][2];
-
-            // target_pose.pose.orientation.x = target_pos[0][3];
-            // target_pose.pose.orientation.y = target_pos[0][4];
-            // target_pose.pose.orientation.z = target_pos[0][5];
-            // target_pose.pose.orientation.w = target_pos[0][6];
+            // roll  = radian(target_pos[0][3]);
+            // pitch = radian(target_pos[0][4]);
+            // yaw   = radian(target_pos[0][5]);
+            // q.setRPY(roll, pitch, yaw);
+	        // tf::quaternionTFToMsg(q, target_pose.pose.orientation);
             
             // keep final target
             target_pose.pose.position.x = target_pos[target_num - 1][0];
             target_pose.pose.position.y = target_pos[target_num - 1][1];
             target_pose.pose.position.z = target_pos[target_num - 1][2];
-			
-            // target_pose.pose.orientation.x = target_pos[target_num - 1][3];
-            // target_pose.pose.orientation.y = target_pos[target_num - 1][4];
-            // target_pose.pose.orientation.z = target_pos[target_num - 1][5];
-            // target_pose.pose.orientation.w = target_pos[target_num - 1][6];
-			
             roll  = radian(target_pos[target_num - 1][3]);
             pitch = radian(target_pos[target_num - 1][4]);
             yaw   = radian(target_pos[target_num - 1][5]);
-
             q.setRPY(roll, pitch, yaw);
 	        tf::quaternionTFToMsg(q, target_pose.pose.orientation);
-
+            
+            target_pose.header.stamp = ros::Time::now();
             local_pos_pub.publish(target_pose);
-	        // i = 0;
+	        
+            // loop the waypoints
+            // i = 0; 
 			ros::spinOnce();
         	rate.sleep();
         }
 		
-		      
+		// check when drone reached target      
 		bool check = check_position() && check_orientation();
 		std::cout << check << std::endl;
 		if(check)
