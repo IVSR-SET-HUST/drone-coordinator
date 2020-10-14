@@ -1,18 +1,5 @@
 #include "offboard/offboard.h"
 
-// state callback 
-void state_cb(const mavros_msgs::State::ConstPtr& msg)
-{
-    current_state = *msg;
-}
-
-// pose callback
-void pose_cb(const geometry_msgs::PoseStamped::ConstPtr& msg)
-{
-    current_pose = *msg;
-}
-
-// main function
 int main(int argc, char **argv)
 {
     // initialize ros node
@@ -24,6 +11,8 @@ int main(int argc, char **argv)
             ("mavros/state", 10, state_cb);
     ros::Subscriber local_pose_sub = nh.subscribe<geometry_msgs::PoseStamped>
             ("mavros/local_position/pose", 10, pose_cb);
+    ros::Subscriber batt_sub = nh.subscribe<sensor_msgs::BatteryState> 
+            ("mavros/battery", 10, battery_cb);
     
     // publisher
     ros::Publisher local_pos_pub = nh.advertise<geometry_msgs::PoseStamped>
@@ -42,7 +31,7 @@ int main(int argc, char **argv)
     ROS_INFO("FCU connected");
 
 	// check current pose
-	for(int i = 10; ros::ok() && i > 0; --i)
+	for(int i = 100; ros::ok() && i > 0; --i)
 	{
 		ROS_INFO_STREAM("\nCurrent position: \n" << current_pose.pose.position);
 
@@ -59,7 +48,10 @@ int main(int argc, char **argv)
 		std::cout << "Roll : " << degree(r) << std::endl;
 		std::cout << "Pitch: " << degree(p) << std::endl;
 		std::cout << "Yaw  : " << degree(y) << std::endl;		
-	
+
+        batt_percent = current_batt.percentage * 100;
+        std::printf("Current Battery: %.1f \n", batt_percent);
+
 		ros::spinOnce();
         rate.sleep();
     }
@@ -76,7 +68,7 @@ int main(int argc, char **argv)
 	tf::quaternionTFToMsg(q, target_pose.pose.orientation);
 
     // send a few setpoints before starting
-    for(int i = 10; ros::ok() && i > 0; --i)
+    for(int i = 100; ros::ok() && i > 0; --i)
     {
         target_pose.header.stamp = ros::Time::now();
         local_pos_pub.publish(target_pose);
@@ -85,7 +77,7 @@ int main(int argc, char **argv)
     }
     ROS_INFO("Ready");
     
-    int i = 0;
+    int i=0;
     while(ros::ok())
     {
 		ROS_INFO_STREAM("\nCurrent position: \n" << current_pose.pose.position);
@@ -104,6 +96,9 @@ int main(int argc, char **argv)
 		std::cout << "Pitch: " << degree(p) << std::endl;
 		std::cout << "Yaw  : " << degree(y) << std::endl;
         
+        batt_percent = current_batt.percentage * 100;
+        std::printf("Current Battery: %.1f \n", batt_percent);
+
 		// publish target position
         if (i < target_num)
         {
