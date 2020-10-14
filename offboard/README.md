@@ -14,21 +14,26 @@
 - **catkin workspace**: `catkin_ws`
 - **mavros**          : [here](https://dev.px4.io/master/en/ros/mavros_installation.html)
 
-- **copy `offboard` directory to `catkin_ws/src` and build**
+- **copy `offboard` directory to `catkin_ws/src/` and build**
 
 ## usage
 ###### hovering node
 - *connect jetson to pixhawk*         : `roslaunch mavros px4.launch`
+  
+  on simulation                       : `roslaunch px4 mavros_posix_sitl.launch`
 - *run hovering_node*                 : `rosrun offboard hovering`
 - **check current position on screen**
 
   **input target height for hovering (in meter): z**
   
 - **on remote controller** switch to ARM, then switch flight mode to OFFBOARD
-- **on simualation control** `rosrun offboard setmode_offb`
+
+  on simualation: `rosrun offboard setmode_offb`
 
 ###### offboard node
 - *connect jetson to pixhawk*         : `roslaunch mavros px4.launch`
+  
+  on simulation                       : `roslaunch px4 mavros_posix_sitl.launch`
 - *run offboard_node*                 : `rosrun offboard offboard`
 - **check current pose on screen**
 
@@ -39,16 +44,18 @@
   **input target Yaw rotation (in degree): yaw_i**
   
 - **on remote controller** switch to ARM, then switch flight mode to OFFBOARD
-- **on simualation control** `rosrun offboard setmode_offb`
+
+  on simualation: `rosrun offboard setmode_offb`
 
 ###### gps_offb node
 - *connect jetson to pixhawk*         : `roslaunch mavros px4.launch`
-- or - *simualation on Gazebo*        : `roslaunch px4 mavros_posix_silt.launch`
+  
+  on simulation                       : `roslaunch px4 mavros_posix_sitl.launch`
 - *run gps_offb*                 : `rosrun offboard gps_offb`
 - **drone is going to get current gps (global position)**
 
   ```
-    Got global position: [*Latitude*, *Longitude*, *Altitude*]
+    Current GPS position:: [*Latitude*, *Longitude*, *Altitude*]
   ```
 - **check global position and input target**
 
@@ -64,4 +71,5 @@
   ```
     
 - **on remote controller** switch to ARM, then switch flight mode to OFFBOARD
-- **on simualation control** `rosrun offboard setmode_offb`
+
+  on simualation: `rosrun offboard setmode_offb`
