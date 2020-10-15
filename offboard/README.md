@@ -12,66 +12,64 @@
 ## required
 - **ros**             : Melodic (on Ubuntu 18.04)
 - **catkin workspace**: `catkin_ws`
-- **mavros**          : at `catkin_ws/src/mavros`
-- **mavlink**         : at `catkin_ws/src/mavlink`
+- **mavros**          : [here](https://dev.px4.io/master/en/ros/mavros_installation.html)
 
-- **copy `offboard` directory to `catkin_ws/src` and build**
+- **copy `offboard` directory to `catkin_ws/src/` and build**
 
 ## usage
 ###### hovering node
 - *connect jetson to pixhawk*         : `roslaunch mavros px4.launch`
+  
+  on simulation                       : `roslaunch px4 mavros_posix_sitl.launch`
 - *run hovering_node*                 : `rosrun offboard hovering`
-- **check current state and position on screen**
+- **check current position on screen**
 
-  **input target position: x, y, z**
+  **input target height for hovering (in meter): z**
   
 - **on remote controller** switch to ARM, then switch flight mode to OFFBOARD
-- **on simualation control** `rosrun offboard setmode_offb`
+
+  on simualation: `rosrun offboard setmode_offb`
 
 ###### offboard node
 - *connect jetson to pixhawk*         : `roslaunch mavros px4.launch`
+  
+  on simulation                       : `roslaunch px4 mavros_posix_sitl.launch`
 - *run offboard_node*                 : `rosrun offboard offboard`
-- **check current state and position on screen**
+- **check current pose on screen**
 
   **input number of target (>0)**
   
-  **input target position: pos_x_i, pos_y_i, pos_z_i**
+  **input target position (in meter): pos_x_i, pos_y_i, pos_z_i**
   
-  **input target RPY: roll_i, pitch_i, yaw_i (in degree)**
+  **input target Yaw rotation (in degree): yaw_i**
   
 - **on remote controller** switch to ARM, then switch flight mode to OFFBOARD
-- **on simualation control** `rosrun offboard setmode_offb`
+
+  on simualation: `rosrun offboard setmode_offb`
 
 ###### gps_offb node
 - *connect jetson to pixhawk*         : `roslaunch mavros px4.launch`
+  
+  on simulation                       : `roslaunch px4 mavros_posix_sitl.launch`
 - *run gps_offb*                 : `rosrun offboard gps_offb`
 - **drone is going to get current gps (global position)**
 
   ```
-    ...
-  
-    goal_position.latitude = global_position.latitude;
-    
-    goal_position.longitude = global_position.longitude;
-    
-    goal_position.altitude = global_position.altitude;
-    
-    ...
+    Current GPS position:: [*Latitude*, *Longitude*, *Altitude*]
   ```
-    
-  **setpoint is:**
-  
+- **check global position and input target**
+
   ```
-    ...
-  
-    goal_position.altitude = goal_position.altitude + 2.0;
-    
-    goal_position.latitude = goal_position.latitude + 0.00001;
-    
-    goal_position.longitude = goal_position.longitude + 0.00001;
-    
-    ...
+    Input GPS position
+
+    Latitude  (degree):
+
+    Longitude (degree):
+
+    Altitude  (meter) :
+
   ```
     
 - **on remote controller** switch to ARM, then switch flight mode to OFFBOARD
-- **on simualation control** `rosrun offboard setmode_offb`
+
+  on simualation: `rosrun offboard setmode_offb`

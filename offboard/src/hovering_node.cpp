@@ -1,29 +1,20 @@
-#include <ros/ros.h>
-#include <geometry_msgs/PoseStamped.h>
-#include <mavros_msgs/State.h>
-
-#include <iostream>
-
-mavros_msgs::State current_state;
-void state_cb(const mavros_msgs::State::ConstPtr& msg){
-    current_state = *msg;
-}
-
-geometry_msgs::PoseStamped current_pose;
-void pose_cb(const geometry_msgs::PoseStamped::ConstPtr& msg){
-    current_pose = *msg;
-}
+#include "offboard/offboard.h"
 
 int main(int argc, char **argv)
 {
+    // initialize ros node
     ros::init(argc, argv, "hovering");
     ros::NodeHandle nh;
 
+    // subscriber
     ros::Subscriber state_sub = nh.subscribe<mavros_msgs::State>
             ("mavros/state", 10, state_cb);
     ros::Subscriber local_pose_sub = nh.subscribe<geometry_msgs::PoseStamped>
             ("mavros/local_position/pose", 10, pose_cb);
+    ros::Subscriber batt_sub = nh.subscribe<sensor_msgs::BatteryState> 
+            ("mavros/battery", 10, battery_cb);
 
+    // publisher
     ros::Publisher local_pos_pub = nh.advertise<geometry_msgs::PoseStamped>
             ("mavros/setpoint_position/local", 10);
 
@@ -31,41 +22,49 @@ int main(int argc, char **argv)
     ros::Rate rate(20.0);
 
     // wait for FCU connection
-    while(ros::ok() && !current_state.connected){
+    while(ros::ok() && !current_state.connected)
+    {
+        ROS_INFO_ONCE("Connecting to FCU ...");
         ros::spinOnce();
         rate.sleep();
     }
+    ROS_INFO("FCU connected");
 
-	// check current state and position
-	for(int i = 10; ros::ok() && i > 0; --i)
+	// check current position
+	for(int i = 100; ros::ok() && i > 0; --i)
 	{
-		ROS_INFO_STREAM("\nCurrent state: \n" << current_state);
-		ROS_INFO_STREAM("\nCurrent pose: \n" << current_pose.pose.position);	
+		ROS_INFO_STREAM("\nCurrent pose: \n" << current_pose.pose.position);
+        batt_percent = current_batt.percentage * 100;
+        std::printf("Current Battery: %.1f \n", batt_percent);	
+
 		ros::spinOnce();
         rate.sleep();
     }
 
-    geometry_msgs::PoseStamped target_pose;
-
-	std::cout << "Input target: " << std::endl;
-	std::cout << "x: "; std::cin >> target_pose.pose.position.x;
-	std::cout << "y: "; std::cin >> target_pose.pose.position.y;
+    // input target position, hovering at current (x, y) 
+    target_pose.pose.position.x = current_pose.pose.position.x;
+    target_pose.pose.position.y = current_pose.pose.position.y;
+	std::cout << "Input a height for hovering: " << std::endl;
 	std::cout << "z: "; std::cin >> target_pose.pose.position.z;
 
     // send a few setpoints before starting
-    for(int i = 100; ros::ok() && i > 0; --i){
+    for(int i = 100; ros::ok() && i > 0; --i)
+    {
+        target_pose.header.stamp = ros::Time::now();
         local_pos_pub.publish(target_pose);
         ros::spinOnce();
         rate.sleep();
     }
+    ROS_INFO("Ready");
 
-    ros::Time last_request = ros::Time::now();
+    // publish target, keep drone hovering
+    while(ros::ok())
+    {
+        ROS_INFO_STREAM("\nCurrent position: \n" << current_pose.pose.position);	
+        batt_percent = current_batt.percentage * 100;
+        std::printf("Current Battery: %.1f \n", batt_percent);
 
-    while(ros::ok()){
-		ROS_INFO_STREAM("\nCurrent position: \n" << current_pose.pose.position);	
-	    ROS_INFO_STREAM("\nCurrent state: \n" << current_state);
-		ROS_INFO_STREAM("\nTarget position: \n" << target_pose.pose.position);
-
+        target_pose.header.stamp = ros::Time::now();   
         local_pos_pub.publish(target_pose);
         ros::spinOnce();
         rate.sleep();
