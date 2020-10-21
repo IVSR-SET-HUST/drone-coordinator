@@ -58,18 +58,14 @@
     Current GPS position:: [*Latitude*, *Longitude*, *Altitude*]
   ```
 - **check global position and input target**
-
-  ```
-    Input GPS position
-
-    Latitude  (degree):
-
-    Longitude (degree):
-
-    Altitude  (meter) :
-
-  ```
-    
+- **input number of goal (>0)** 
+- **input goal lat, lon, alt**
+```
+  Goal (i) position:
+  Latitude  i (in degree):
+  Longitude i (in degree):
+  Altitude  i  (in meter):
+```
 - **on remote controller** switch to ARM, then switch flight mode to OFFBOARD
 
   on simualation: `rosrun offboard setmode_offb`
