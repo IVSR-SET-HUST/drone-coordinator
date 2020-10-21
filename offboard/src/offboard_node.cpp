@@ -76,7 +76,8 @@ int main(int argc, char **argv)
         rate.sleep();
     }
     ROS_INFO("Ready");
-    
+    ros::Duration(3).sleep();
+
     int i=0;
     while(ros::ok())
     {
@@ -152,6 +153,7 @@ int main(int argc, char **argv)
 		std::cout << check << std::endl;
 		if(check)
 		{
+            ros::Duration(5).sleep();
 			i = i + 1;
 			ros::spinOnce();
 		    rate.sleep();
@@ -166,6 +168,6 @@ int main(int argc, char **argv)
         ros::spinOnce();
         rate.sleep();
     }
-	
+
     return 0;
 }

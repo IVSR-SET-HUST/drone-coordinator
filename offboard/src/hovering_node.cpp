@@ -56,6 +56,7 @@ int main(int argc, char **argv)
         rate.sleep();
     }
     ROS_INFO("Ready");
+    ros::Duration(3).sleep();
 
     // publish target, keep drone hovering
     while(ros::ok())
