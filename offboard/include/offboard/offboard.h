@@ -24,6 +24,7 @@ const double eR  =6378.137; //km
 /****** DEFINE FUNCTIONS ******/
 bool check_position(void);
 bool check_orientation(void);
+bool check_global(void);
 
 void input_local_target(void);
 void input_global_target(void);
@@ -53,6 +54,9 @@ int target_num;
 float target_pos[10][7];
 double roll, pitch, yaw;
 double r, p, y;
+
+int goal_num;
+double goal_pos[10][3];
 
 double latitude, longitude, altitude, distance;
 float batt_percent;
@@ -152,6 +156,31 @@ bool check_orientation()
 	return reached;
 }
 
+/****************************************************************************************************/
+/***** check_global: check when drone reached the GPS goal positions. return the true or false ******/
+/****************************************************************************************************/
+bool check_global()
+{
+	bool reached;
+	double global_position_alt = double(gps_position.alt)/1000;
+	if(
+		((goal_position.pose.position.latitude - 0.000001) < global_position.latitude)
+	 && (global_position.latitude < (goal_position.pose.position.latitude + 0.000001)) 
+	 && ((goal_position.pose.position.longitude - 0.000001) < global_position.longitude)
+	 && (global_position.longitude < (goal_position.pose.position.longitude + 0.000001))
+	 && ((goal_position.pose.position.altitude - 0.1) < global_position_alt)
+	 && (global_position_alt < (goal_position.pose.position.altitude + 0.1))
+	)
+	{
+		reached = 1;
+	}
+	else
+	{
+		reached = 0;
+	}
+	return reached;
+}
+
 /**************************************************************************/
 /***** input_local_target: input the number of waypoints and each point   *
  * coodinates (x, y, z). and input the yaw rotation at each waypoint ******/
@@ -174,15 +203,28 @@ void input_local_target()
 	}
 }
 
-/*************************************************************************************/
-/***** input_global_target: input the GPS [latitude, longitude, altitude] point ******/
-/*************************************************************************************/
+/****************************************************************************************/
+/***** input_global_target: input the GPS [latitude, longitude, altitude] point(s) ******/
+/****************************************************************************************/
+// void input_global_target()
+// {
+// 	std::cout << "Input GPS position" << std::endl;
+// 	std::cout << "Latitude  (degree):"; std::cin >> latitude;
+// 	std::cout << "Longitude (degree):"; std::cin >> longitude;
+// 	std::cout << "Altitude  (meter) :"; std::cin >> altitude;
+// }
+
 void input_global_target()
 {
-	std::cout << "Input GPS position" << std::endl;
-	std::cout << "Latitude  (degree):"; std::cin >> latitude;
-	std::cout << "Longitude (degree):"; std::cin >> longitude;
-	std::cout << "Altitude  (meter) :"; std::cin >> altitude;
+	std::cout << "Input GPS position(s)" << std::endl;
+	std::cout << "Number of goal(s): "; std::cin >> goal_num;
+	for (int i = 0; i < goal_num; i++)
+	{
+		std::cout << "Goal ("<< i+1 <<") position:" << std::endl;
+		std::cout << "Latitude  " << i+1 << " (in degree):"; std::cin >> goal_pos[i][0];
+		std::cout << "Longitude " << i+1 << " (in degree):"; std::cin >> goal_pos[i][1];
+		std::cout << "Altitude  " << i+1 << "  (in meter):"; std::cin >> goal_pos[i][2];
+	}
 }
 
 /**********************************************************/
