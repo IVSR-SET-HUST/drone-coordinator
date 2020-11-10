@@ -1,0 +1,28 @@
+roscore& rosrun d435 publish_gray.py 
+
+roslaunch mavros px4.launch 
+
+source manh_catkin/vinsmono_ws/devel/setup.bash 
+roslaunch vins_estimator vins_rviz.launch
+
+source manh_catkin/vinsmono_ws/devel/setup.bash 
+roslaunch vins_estimator my_euroc_no_extrinsic_param.launch 
+
+
+
+source manh_catkin/vinsmono_ws/devel/setup.bash 
+roslaunch vins_estimator my_euroc.launch 
+
+
+0.0293511 0.0974986  0.994803
+-0.993447  0.112829 0.0182529
+-0.110463 -0.988819  0.100171
+0.0741641 -0.0109495  -0.094965
+
+source catkin_ws/VINSMono_ws/devel/setup.bash 
+  172  roslaunch vins_estimator euroc.launch
+  173  source catkin_ws/VINSMono_ws/devel/setup.bash
+  174  roslaunch vins_estimator vins_rviz.launch
+
+rosbag play ~/Lab/bag_file/MH_01_easy.bag 
+
