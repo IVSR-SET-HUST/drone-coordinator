@@ -17,6 +17,8 @@
 - **copy `offboard` directory to `catkin_ws/src/` and build**
 
 ## usage
+#### bash script is [here](https://github.com/congtranv/bash)
+
 ###### hovering node
 - *connect jetson to pixhawk*         : `roslaunch mavros px4.launch`
   
