@@ -53,18 +53,56 @@ Open three terminals, launch the vins_estimator , rviz and play the bag file res
 ```
     rosbag play YOUR_BAG_DIR/MH_01_easy.bag 
 ```
-## 2. Run VINSMono with Real Dataset
+## 2. Run VINSMono with Realtime Data
 
 **2.1 Setup sensor**
+
 Hardware:
 - Laptop Corei5
-- Mono Camera: Intel® RealSense™ Depth Camera D435 (using rgb camera at grayscale topic, see [Get grayscale topic]())
-- IMU Sensor: PX4 
+- Mono Camera: Intel® RealSense™ Depth Camera D435 (using rgb camera at grayscale topic, exceed 30Hz, see **2.2**)
+- IMU Sensor: PX4 (exceed 150Hz)
+
 Setup:
-cd ~/catkin_ws/VINSMono_ws/src/VINS-Mono/config
-mkdir my_config
+```
+    cd ~/catkin_ws/VINSMono_ws/src/VINS-Mono/config
+    mkdir my_config
+```
 Add [my_live_config.yaml]() and [my_live_config_no_extrinsic.yaml]() here.
-cd ~/catkin_ws/VINSMono_ws/src/VINS-Mono/vins_estimator/launch
+```
+    cd ~/catkin_ws/VINSMono_ws/src/VINS-Mono/vins_estimator/launch
+```
+
 Add [my_live.launch]() and [my_live_no_extrinsic_param.launch]() here.
- **2.2 Run with extrinsic parameter
+
+ **2.2 Run with extrinsic parameter**
  
+ Get mono grayscale image topic using image_proc:
+```
+    roslaunch realsense2_camera rs_camera.launch 
+    ROS_NAMESPACE=camera/color rosrun image_proc image_proc
+```
+Now, you have image topic: /camera/color/image_mono.
+
+Get imu topic from px4:
+```
+    roslaunch mavros px4.launch
+```
+Launch rviz and vins_estimator:
+
+```
+    source catkin_ws/VINSMono_ws/devel/setup.bash 
+    roslaunch vins_estimator vins_rviz.launch
+```
+```
+    source catkin_ws/VINSMono_ws/devel/setup.bash 
+    roslaunch vins_estimator my_live.launch
+```
+ **2.2 Run without extrinsic parameter**
+ 
+ Replace the last line with:
+```
+    roslaunch vins_estimator my_live_no_extrinsic_param.launch
+```
+After, you need to move your MAV slowly in varies way (roll, pitch, yaw) to calibration online.
+
+
