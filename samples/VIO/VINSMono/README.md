@@ -5,9 +5,10 @@ Based on [VINSMono Installation](https://github.com/HKUST-Aerial-Robotics/VINS-M
 1.1 **Ubuntu** and **ROS**
 Ubuntu  18.04.
 ROS Melodic. [ROS Installation](http://wiki.ros.org/ROS/Installation)
-additional ROS pacakge
+
+Additional ROS pacakge
 ```
-    sudo apt-get install ros-YOUR_DISTRO-cv-bridge ros-YOUR_DISTRO-tf ros-YOUR_DISTRO-message-filters ros-YOUR_DISTRO-image-transport
+    sudo apt-get install ros-melodic-cv-bridge ros-melodic-tf ros-melodic-message-filters ros-melodic-image-transport
 ```
 
 1.2. **Ceres Solver**
@@ -60,7 +61,11 @@ Open three terminals, launch the vins_estimator , rviz and play the bag file res
 Hardware:
 - Laptop Corei5
 - Mono Camera: Intel® RealSense™ Depth Camera D435 (using rgb camera at grayscale topic, 30Hz, see **2.2**)
-- IMU Sensor: PX4 (150Hz)
+- IMU Sensor: PX4 (150Hz, see [update_rate_imu.md](https://github.com/luongmanh1098/drone-coordinator/blob/sprint_2020-11-14/sensors/update_rate_imu.md) if you want to update your px4 imu rate)
+
+Ros package:
+- Install [mavros](https://github.com/mavlink/mavros)
+- Install [realsense-ros](https://github.com/IntelRealSense/realsense-ros)
 
 Setup:
 ```
