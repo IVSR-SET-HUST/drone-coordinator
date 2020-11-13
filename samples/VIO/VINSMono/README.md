@@ -59,8 +59,8 @@ Open three terminals, launch the vins_estimator , rviz and play the bag file res
 
 Hardware:
 - Laptop Corei5
-- Mono Camera: Intel® RealSense™ Depth Camera D435 (using rgb camera at grayscale topic, exceed 30Hz, see **2.2**)
-- IMU Sensor: PX4 (exceed 150Hz)
+- Mono Camera: Intel® RealSense™ Depth Camera D435 (using rgb camera at grayscale topic, 30Hz, see **2.2**)
+- IMU Sensor: PX4 (150Hz)
 
 Setup:
 ```
