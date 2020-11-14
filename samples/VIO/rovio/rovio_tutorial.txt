@@ -1,0 +1,49 @@
+Require:
+ros
+catkin
+python
+
+Implementation:
+install essential package:
+sudo apt-get install ros-melodic-catkin
+sudo apt-get install cmake python-catkin-pkg python-empy python-nose python-setuptools libgtest-dev build-essential
+sudo apt-get install python-catkin-pkg
+sudo apt-get install python-catkin-tools
+sudo apt-get install freeglut3-dev
+sudo apt-get install libglew-dev
+
+create catkin workspace folder:
+mkdir -p ~/catkin_vio/src
+cd ~/catkin_vio/src
+
+git clone kindr and rovio package to workspace:
+git clone https://github.com/ANYbotics/kindr.git
+catkin build -w ~/catkin_vio kindr
+git clone https://github.com/ethz-asl/rovio.git
+cd rovio
+git submodule update --init --recursive
+cd ~/catkin_vio
+catkin build rovio --cmake-args -DCMAKE_BUILD_TYPE=Release -DMAKE_SCENE=ON
+mkdir ~/catkin_vio/src/rovio/rovio
+
+Download data and config launch file:
+
+download data .bag file from: https://projects.asl.ethz.ch/datasets/doku.php?id=kmavvisualinertialdatasets
+save to: /home/luongmanh/catkin_vio/src/rovio
+
+Config file launch with saved data file:
+
+Note: change /home/luongmanh to your home path
+
+gedit ~/catkin_vio/src/rovio/launch/rovio_rosbag_node.launch 
+change line: <param name="rosbag_filename" value="/root/catkin_vio/src/rovio/MH_01_easy.bag"/>
+to:   <param name="rosbag_filename" value="/home/luongmanh/catkin_vio/src/rovio/MH_01_easy.bag"/>
+
+Run:
+open terminal: roscore
+
+open another terminal:
+cd ~/catkin_vio
+source devel/setup.bash 
+roslaunch rovio rovio_rosbag_node.launch
+

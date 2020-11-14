@@ -1,12 +1,19 @@
 cmake_minimum_required(VERSION 3.0.2)
 project(offboard)
 
+## Compile as C++11, supported in ROS Kinetic and newer
+# add_compile_options(-std=c++11)
+
+## Find catkin macros and libraries
+## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
+## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   geometry_msgs
   mavros_msgs
   roscpp
   rospy
   std_msgs
+  roslaunch
 )
 
 catkin_package(
@@ -16,25 +23,35 @@ catkin_package(
 #  DEPENDS system_lib
 )
 
+###########
+## Build ##
+###########
+
+## Specify additional locations of header files
+## Your package locations should be listed before other locations
 include_directories(
   include
   ${catkin_INCLUDE_DIRS}
 )
 
-## Declare a C++ library
-# add_library(${PROJECT_NAME}
-#   src/${PROJECT_NAME}/offboard.cpp
-# )
+roslaunch_add_file_check(launch)
 
-## Add executable for takeoff_node
-#add_executable(${PROJECT_NAME}_node src/offboard_node.cpp)
-add_executable(takeoff_node src/takeoff_node.cpp)
+add_executable(hovering src/hovering_node.cpp)
+target_link_libraries(hovering
+  ${catkin_LIBRARIES}
+)
 
-# add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_executable(offboard src/offboard_node.cpp)
+target_link_libraries(offboard
+  ${catkin_LIBRARIES}
+)
 
-# target_link_libraries(${PROJECT_NAME}_node
-#  ${catkin_LIBRARIES}
-#)
-target_link_libraries(takeoff_node
+add_executable(gps_offb src/gps_offb.cpp)
+target_link_libraries(gps_offb
+  ${catkin_LIBRARIES}
+)
+
+add_executable(setmode_offb src/setmode_offb.cpp)
+target_link_libraries(setmode_offb
   ${catkin_LIBRARIES}
 )

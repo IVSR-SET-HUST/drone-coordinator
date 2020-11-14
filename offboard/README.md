@@ -1,31 +1,73 @@
-# Offboard package for control drone
+# offboard package
 
-## Include
-- manifests: package.xml
-- CMake: CMakeLists.txt
-- Takeoff source: takeoff\_node.cpp
-- 
-- [_ongoing_]
+## contain
+- *include/offboard/offboard.h*: header
+- *src/hovering_node.cpp*      : keep drone hovering on input target position
+- *src/offboard_node.cpp*      : keep drone flying follow input waypoints
+- *src/gps_offb.cpp*           : get current gps position and hovering on a setpoint position
+- *src/setmode_offb.cpp*       : set OFFBOARD mode and ARM vehicle in simulation
+- *package.xml*                : ros manifests
+- *CMakeLists.txt*             : CMakeLists
 
-## Required
-- **ros**: Melodic (on Ubuntu 18.04)
+## required
+- **ros**             : Melodic (on Ubuntu 18.04)
 - **catkin workspace**: `catkin_ws`
-- **mavros**: at `catkin_ws/src/mavros`
-- **mavlink**: at `catkin_ws/src/mavlink`
+- **mavros**          : [here](https://dev.px4.io/master/en/ros/mavros_installation.html)
 
-## Build offboard
-**Init offboard package and create takeoff\_node.cpp**
-- `cd [path/to/catkin_ws]/src/`
-- `catkin_create_package offboard rospy roscpp std_msgs mavros_msgs geometry_msgs`
-- copy takeoff\_node.cpp to `[path/to/catkin_ws]/src/offboard/src/`
-- copy and replace package.xml and CMakelists.txt to `[path/to/catkin_ws]/src/offboard`
-- `catkin build offboard`
-- `source [path/to/catkin_ws]/devel/setup.bash`
+- **copy `offboard` directory to `catkin_ws/src/` and build**
 
-## Usage
-- _connect jetson to pixhawk_         : `roslaunch mavros px4.launch`
-- _check drone state_                 : `rostopic echo /mavros/state`
-- _check drone current local position_: `rostopic echo /mavros/local_position/pose`
+## usage
+#### bash script is [here](https://github.com/congtranv/bash)
 
-- _run takeoff_node_                 : `rosrun offboard takeoff_node`
+###### hovering node
+- *connect jetson to pixhawk*         : `roslaunch mavros px4.launch`
+  
+  on simulation                       : `roslaunch px4 mavros_posix_sitl.launch`
+- *run hovering_node*                 : `rosrun offboard hovering`
+- **check current position on screen**
+
+  **input target height for hovering (in meter): z**
+  
 - **on remote controller** switch to ARM, then switch flight mode to OFFBOARD
+
+  on simualation: `rosrun offboard setmode_offb`
+
+###### offboard node
+- *connect jetson to pixhawk*         : `roslaunch mavros px4.launch`
+  
+  on simulation                       : `roslaunch px4 mavros_posix_sitl.launch`
+- *run offboard_node*                 : `rosrun offboard offboard`
+- **check current pose on screen**
+
+  **input number of target (>0)**
+  
+  **input target position (in meter): pos_x_i, pos_y_i, pos_z_i**
+  
+  **input target Yaw rotation (in degree): yaw_i**
+  
+- **on remote controller** switch to ARM, then switch flight mode to OFFBOARD
+
+  on simualation: `rosrun offboard setmode_offb`
+
+###### gps_offb node
+- *connect jetson to pixhawk*         : `roslaunch mavros px4.launch`
+  
+  on simulation                       : `roslaunch px4 mavros_posix_sitl.launch`
+- *run gps_offb*                 : `rosrun offboard gps_offb`
+- **drone is going to get current gps (global position)**
+
+  ```
+    Current GPS position:: [*Latitude*, *Longitude*, *Altitude*]
+  ```
+- **check global position and input target**
+- **input number of goal (>0)** 
+- **input goal lat, lon, alt**
+```
+  Goal (i) position:
+  Latitude  i (in degree):
+  Longitude i (in degree):
+  Altitude  i  (in meter):
+```
+- **on remote controller** switch to ARM, then switch flight mode to OFFBOARD
+
+  on simualation: `rosrun offboard setmode_offb`
