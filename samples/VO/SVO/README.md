@@ -47,7 +47,7 @@ Search CMakeLists.txt files in src, remove -march=native in all these CMakeLis
     src/rpg_vikit/vikit_common/CMakeLists.txt
     src/rpg_vikit/vikit_ros/CMakeLists.txt
 ```
-Example: ![remove_march]()
+Example: ![remove_march](image/SVO_setup.png)
 
 Finally, build SVO:
 ```
@@ -55,4 +55,5 @@ cd ~/catkin_ws/svo_ws
 catkin build
 ```
 ## 3. Build Error
-
+![svo_erro](image/svo_error.png)
+Close all unnecessary applications.
