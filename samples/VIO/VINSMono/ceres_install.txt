@@ -1,9 +1,9 @@
 
-  816  git clone https://ceres-solver.googlesource.com/ceres-solver
-  817  cd ceres-solver/
-  818  mkdir build
-  819  cd build
-  820  cmake ..
-  821  make -j4
-  823  sudo make install
+git clone https://ceres-solver.googlesource.com/ceres-solver
+cd ceres-solver/
+mkdir build
+cd build
+cmake ..
+make -j4
+sudo make install
 
