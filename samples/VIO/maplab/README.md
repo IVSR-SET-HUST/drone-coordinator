@@ -40,7 +40,7 @@ Clone the repository and catkin build:
 
 Download [EuRoC MAV Dataset](http://projects.asl.ethz.ch/datasets/doku.php?id=kmavvisualinertialdatasets).
 
-Open three terminals, launch the vins_estimator, [rviz](../maplab.rviz) and play the bag file respectively. Take MH_01 for example
+Open three terminals, launch the vins_estimator, [rviz](maplab.rviz) and play the bag file respectively. Take MH_01 for example
 ```
     source catkin_ws/maplab_ws/devel/setup.bash
     roscore& rosrun rovioli tutorial_euroc_live save_folder
