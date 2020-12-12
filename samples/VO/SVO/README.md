@@ -47,7 +47,7 @@ Search CMakeLists.txt files in src, remove -march=native in all these CMakeLis
     src/rpg_vikit/vikit_common/CMakeLists.txt
     src/rpg_vikit/vikit_ros/CMakeLists.txt
 ```
-Example: ![remove_march]()
+Example: ![remove_march](image/SVO_setup.png)
 
 Finally, build SVO:
 ```
