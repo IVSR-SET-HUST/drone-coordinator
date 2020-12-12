@@ -55,4 +55,5 @@ cd ~/catkin_ws/svo_ws
 catkin build
 ```
 ## 3. Build Error
-
+![svo_erro](image/svo_error.png)
+Close all unnecessary applications.
