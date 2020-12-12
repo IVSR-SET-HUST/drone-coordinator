@@ -20,6 +20,7 @@ Additional ROS & Python pacakge
 ```
 ## 2. Build on ROS
 Clone the repository and catkin build:
+Note: Close all unnecessary softwares before build
 ```
     export CATKIN_WS=~/catkin_ws/maplab_ws
     mkdir -p $CATKIN_WS/src
@@ -34,6 +35,9 @@ Clone the repository and catkin build:
     cd $CATKIN_WS
     catkin build maplab
 ```
+## 3. Build Error
+
+
 # Run
 
 ## 1. Run Maplab with EuRoC MAV Dataset
