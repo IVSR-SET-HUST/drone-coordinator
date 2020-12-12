@@ -36,8 +36,9 @@ Note: Close all unnecessary softwares before build
     catkin build maplab
 ```
 ## 3. Build Error
+![build error](image/build_error.png)
 
-
+Close all unnecessary softwares before build
 # Run
 
 ## 1. Run Maplab with EuRoC MAV Dataset
