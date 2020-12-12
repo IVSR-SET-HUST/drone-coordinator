@@ -35,7 +35,9 @@ Clone the repository and catkin_make:
     cd ..
     catkin_make
 ```
-
+## 3. Build Error
+![vins_erro](image/vins_error.png)
+Close all unnecessary applications.
 # Run
 
 ## 1. Run VINSMono with EuRoC MAV Dataset
