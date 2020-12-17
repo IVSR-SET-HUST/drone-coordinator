@@ -1,115 +1,103 @@
 # Installation
 
-Based on [VINSMono Installation](https://github.com/HKUST-Aerial-Robotics/VINS-Mono).
 ## 1. Prerequisites
 1.1 **Ubuntu** and **ROS**
+
 Ubuntu  18.04.
+
 ROS Melodic. [ROS Installation](http://wiki.ros.org/ROS/Installation)
 
-Additional ROS pacakge
-```
-    sudo apt-get install ros-melodic-cv-bridge ros-melodic-tf ros-melodic-message-filters ros-melodic-image-transport
-```
-
-1.2. **Ceres Solver**
-Follow [Ceres Installation](http://ceres-solver.org/installation.html)
-```
-    sudo apt-get install cmake libgoogle-glog-dev libatlas-base-dev libeigen3-dev libsuitesparse-dev
-    mkdir -p ~/catkin_ws
-    cd ~/catkin_ws
-    git clone https://ceres-solver.googlesource.com/ceres-solver
-    cd ceres-solver/
-    mkdir build
-    cd build
-    cmake ..
-    make -j8
-    sudo make install
-```
-
+Ros package:
+ ```
+    sudo apt-get install ros-melodic-mav-msgs
+ ```
 ## 2. Build on ROS
-Clone the repository and catkin_make:
+
+Note: Change `~/catkin_ws/ssf_ws` to YOUR_SSF_WORKSPACE_DIRECTORY
+
+Clone the repository and catkin build:
 ```
-    mkdir -p ~/catkin_ws/VINSMono_ws/src
-    cd ~/catkin_ws/VINSMono_ws/src/
-    git clone https://github.com/HKUST-Aerial-Robotics/VINS-Mono.git
-    cd ..
-    catkin_make
+    mkdir -p ~/catkin_ws/ssf_ws/src
+    cd ~/catkin_ws/ssf_ws/src
+    git clone https://github.com/ethz-asl/ethzasl_sensor_fusion.git
+    git clone https://github.com/ethz-asl/asctec_mav_framework.git
+    git clone https://github.com/catkin/catkin_simple.git
+    git clone https://github.com/ethz-asl/glog_catkin.git
 ```
-## 3. Build Error
-![vins_erro](image/vins_error.png)
-Close all unnecessary applications.
+Fix files:
+```
+    gedit ~/catkin_ws/ssf_ws/src/asctec_mav_framework/asctec_hl_interface/src/comm.cpp
+```
+
+change line 126 to: `uint32_t diff = abs((int)baudrates[i] - (int)*baudrate);`
+
+[!comm]()
+
+```
+    gedit ~/catkin_ws/ssf_ws/src/asctec_mav_framework/asctec_hl_interface/src/hl_interface.h
+```
+
+Change line 99 to: `constexpr static const double kDefaultMaxRCChannelValue = 4080;`
+
+[!interface]()
+
+catkin build:
+```
+    cd ~/catkin_ws/ssf_ws
+    catkin build
+```
+
+## 3. Build Viconpos sensor node
+
+Copy [myviconpos_sensor.launch](file/myviconpos_sensor.launch) to `~/catkin_ws/ssf_ws/src/ethzasl_sensor_fusion/ssf_updates/launch`
+
+Rewrite file [main.cpp](file/main.cpp) in: `~/catkin_ws/ssf_ws/src/ethzasl_sensor_fusion/ssf_updates/src`
+
+Copy [myviconpos_measurements.h](file/myviconpos_measurements.h), [myviconpos_sensor.cpp](file/myviconpos_sensor.cpp), [myviconpos_sensor.h](file/myviconpos_sensor.h) to: `~/catkin_ws/ssf_ws/src/ethzasl_sensor_fusion/ssf_updates/src`
+
+Rewrite file [CMakeLists.txt](file/CMakeLists.txt) in: `~/catkin_ws/ssf_ws/src/ethzasl_sensor_fusion/ssf_updates`
+
+Copy file [myviconpos_sensor_fix.yaml](file/myviconpos_sensor_fix.yaml) to: `~/catkin_ws/ssf_ws/src/ethzasl_sensor_fusion/ssf_updates`
+
+Rewrite file [plot_relevant](file/plot_relevant) in `~/catkin_ws/ssf_ws/src/ethzasl_sensor_fusion/ssf_core/scripts`
+
+Rebuild catkin:
+```
+    cd ~/catkin_ws/ssf_ws/
+    catkin build
+```
 # Run
 
-## 1. Run VINSMono with EuRoC MAV Dataset
+Download [dataset.bag](http://wiki.ros.org/ethzasl_sensor_fusion/Tutorials/Introductory%20Tutorial%20for%20Multi-Sensor%20Fusion%20Framework?action=AttachFile&do=view&target=dataset.bag).
 
-Download [EuRoC MAV Dataset](http://projects.asl.ethz.ch/datasets/doku.php?id=kmavvisualinertialdatasets).
+Save dataset to ~/catkin_ws/ssf_ws/
 
-Open three terminals, launch the vins_estimator , rviz and play the bag file respectively. Take MH_01 for example
+Run:
+Terminal 1:
 ```
-    source catkin_ws/VINSMono_ws/devel/setup.bash 
-    roslaunch vins_estimator euroc.launch
+    cd ~/catkin_ws/ssf_ws
+    source devel/setup.bash
+    roslaunch ssf_updates myviconpos_sensor.launch
 ```
+(Ctrl+Shift+T) Terminal 2:
 ```
-    source catkin_ws/VINSMono_ws/devel/setup.bash
-    roslaunch vins_estimator vins_rviz.launch
+    source devel/setup.bash #read_note
+    rosrun rqt_reconfigure rqt_reconfigure
+    Inside rqt_reconfigure_Param window, on the left bar, choose myviconpos_sensor, click on init_filter box
 ```
+(Ctrl+Shift+T) Terminal 3:
 ```
-    rosbag play YOUR_BAG_DIR/MH_01_easy.bag 
+    source devel/setup.bash #read_note
+    rosrun ssf_core plot_relevant
 ```
-## 2. Run VINSMono with Realtime Data
-
-**2.1 Setup sensor**
-
-Hardware:
-- Laptop Corei5
-- Mono Camera: Intel® RealSense™ Depth Camera D435 (using rgb camera at grayscale topic, 30Hz, see **2.2**)
-- IMU Sensor: PX4 (150Hz, see [update_rate_imu.md](https://github.com/luongmanh1098/drone-coordinator/blob/sprint_2020-11-14/sensors/update_rate_imu.md) if you want to update your px4 imu rate)
-
-Ros package:
-- Install [mavros](https://github.com/mavlink/mavros)
-- Install [realsense-ros](https://github.com/IntelRealSense/realsense-ros)
-
-Setup:
+(Ctrl+Shift+T) Terminal 4:
 ```
-    cd ~/catkin_ws/VINSMono_ws/src/VINS-Mono/config
-    mkdir my_config
+    rosbag play dataset.bag --pause -s 25
 ```
-Add [my_live_config.yaml]() and [my_live_config_no_extrinsic.yaml]() here.
+Note: If you run on seprated terminal (instead of subterminal opened by Ctr+Alt+T), you need to source to absolute directory in each terminal:
 ```
-    cd ~/catkin_ws/VINSMono_ws/src/VINS-Mono/vins_estimator/launch
+    source ~/catkin_ws/ssf_ws/devel/setup.bash
 ```
-
-Add [my_live.launch]() and [my_live_no_extrinsic_param.launch]() here.
-
- **2.2 Run with extrinsic parameter**
- 
- Get mono grayscale image topic using image_proc:
-```
-    roslaunch realsense2_camera rs_camera.launch 
-    ROS_NAMESPACE=camera/color rosrun image_proc image_proc
-```
-Now, you have image topic: /camera/color/image_mono.
-
-Get imu topic from px4:
-```
-    roslaunch mavros px4.launch
-```
-Launch rviz and vins_estimator:
-
-```
-    source catkin_ws/VINSMono_ws/devel/setup.bash 
-    roslaunch vins_estimator vins_rviz.launch
-```
-```
-    source catkin_ws/VINSMono_ws/devel/setup.bash 
-    roslaunch vins_estimator my_live.launch
-```
- **2.2 Run without extrinsic parameter**
- 
- Replace the last line with:
-```
-    roslaunch vins_estimator my_live_no_extrinsic_param.launch
-```
-After, you need to move your MAV slowly in varies way (roll, pitch, yaw) to calibration online.
-
+on this terminal, press "Spacebar" to unpause
+see result in rqt_plot_Plot window
 
