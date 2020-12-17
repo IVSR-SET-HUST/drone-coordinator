@@ -94,7 +94,7 @@ Terminal 1:
 ```
     rosbag play dataset.bag --pause -s 25
 ```
-Note: If you run on seprated terminal (instead of subterminal opened by Ctr+Alt+T), you need to source to absolute directory in each terminal:
+Note: If you run on seprated terminal (instead of subterminal opened by Ctr+Shift+T), you need to source to absolute directory in each terminal:
 ```
     source ~/catkin_ws/ssf_ws/devel/setup.bash
 ```
