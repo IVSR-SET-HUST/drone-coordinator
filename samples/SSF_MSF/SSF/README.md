@@ -70,7 +70,7 @@ Rebuild catkin:
 
 Download [dataset.bag](http://wiki.ros.org/ethzasl_sensor_fusion/Tutorials/Introductory%20Tutorial%20for%20Multi-Sensor%20Fusion%20Framework?action=AttachFile&do=view&target=dataset.bag).
 
-Save dataset to ~/catkin_ws/ssf_ws/
+Save dataset to `~/catkin_ws/ssf_ws/`
 
 Run:
 Terminal 1:
@@ -98,6 +98,5 @@ Note: If you run on seprated terminal (instead of subterminal opened by Ctr+Shif
 ```
     source ~/catkin_ws/ssf_ws/devel/setup.bash
 ```
-on this terminal, press "Spacebar" to unpause
-see result in rqt_plot_Plot window
+On this terminal, press "Spacebar" to unpause. See result in rqt_plot_Plot window
 
