@@ -83,8 +83,11 @@ Terminal 1:
 ```
     source devel/setup.bash #read_note
     rosrun rqt_reconfigure rqt_reconfigure
-    Inside rqt_reconfigure_Param window, on the left bar, choose myviconpos_sensor, click on init_filter box
 ```
+
+Inside rqt_reconfigure_Param window, on the left bar, choose myviconpos_sensor, click on init_filter box
+![reconfigure](image/reconfigure.png)
+
 (Ctrl+Shift+T) Terminal 3:
 ```
     source devel/setup.bash #read_note
