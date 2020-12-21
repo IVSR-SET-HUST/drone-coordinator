@@ -31,7 +31,7 @@ Fix files:
 
 change line 126 to: `uint32_t diff = abs((int)baudrates[i] - (int)*baudrate);`
 
-[!comm]()
+![comm](image/comm.png)
 
 ```
     gedit ~/catkin_ws/ssf_ws/src/asctec_mav_framework/asctec_hl_interface/src/hl_interface.h
@@ -39,7 +39,7 @@ change line 126 to: `uint32_t diff = abs((int)baudrates[i] - (int)*baudrate);`
 
 Change line 99 to: `constexpr static const double kDefaultMaxRCChannelValue = 4080;`
 
-[!interface]()
+![interface](image/interface.png)
 
 catkin build:
 ```
