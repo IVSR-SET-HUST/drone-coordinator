@@ -9,7 +9,7 @@ ROS Melodic. [ROS Installation](http://wiki.ros.org/ROS/Installation)
 
 Ros package:
  ```
-sudo apt-get install ros-melodic-mav-msgs
+sudo apt-get install ros-melodic-mav-msgs libgoogle-glog-dev ros-melodic-catkin python-catkin-tools
  ```
 ## 2. Build on ROS
 
