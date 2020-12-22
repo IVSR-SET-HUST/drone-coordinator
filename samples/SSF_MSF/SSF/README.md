@@ -19,31 +19,7 @@ Clone the repository and catkin build:
 ```
 mkdir -p ~/catkin_ws/ssf_ws/src
 cd ~/catkin_ws/ssf_ws/src
-git clone https://github.com/ethz-asl/ethzasl_sensor_fusion.git
-git clone https://github.com/ethz-asl/asctec_mav_framework.git
-git clone https://github.com/catkin/catkin_simple.git
-git clone https://github.com/ethz-asl/glog_catkin.git
-```
-Fix files:
-```
-gedit ~/catkin_ws/ssf_ws/src/asctec_mav_framework/asctec_hl_interface/src/comm.cpp
-```
-
-change line 126 to: `uint32_t diff = abs((int)baudrates[i] - (int)*baudrate);`
-
-![comm](image/comm.png)
-
-```
-gedit ~/catkin_ws/ssf_ws/src/asctec_mav_framework/asctec_hl_interface/src/hl_interface.h
-```
-
-Change line 99 to: `constexpr static const double kDefaultMaxRCChannelValue = 4080;`
-
-![interface](image/interface.png)
-
-catkin build:
-```
-cd ~/catkin_ws/ssf_ws
+cd ..
 catkin build
 ```
 
