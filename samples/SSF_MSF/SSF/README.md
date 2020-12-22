@@ -9,7 +9,7 @@ ROS Melodic. [ROS Installation](http://wiki.ros.org/ROS/Installation)
 
 Ros package:
  ```
-    sudo apt-get install ros-melodic-mav-msgs
+sudo apt-get install ros-melodic-mav-msgs libgoogle-glog-dev ros-melodic-catkin python-catkin-tools
  ```
 ## 2. Build on ROS
 
@@ -17,34 +17,34 @@ Note: Change `~/catkin_ws/ssf_ws` to YOUR_SSF_WORKSPACE_DIRECTORY
 
 Clone the repository and catkin build:
 ```
-    mkdir -p ~/catkin_ws/ssf_ws/src
-    cd ~/catkin_ws/ssf_ws/src
-    git clone https://github.com/ethz-asl/ethzasl_sensor_fusion.git
-    git clone https://github.com/ethz-asl/asctec_mav_framework.git
-    git clone https://github.com/catkin/catkin_simple.git
-    git clone https://github.com/ethz-asl/glog_catkin.git
+mkdir -p ~/catkin_ws/ssf_ws/src
+cd ~/catkin_ws/ssf_ws/src
+git clone https://github.com/ethz-asl/ethzasl_sensor_fusion.git
+git clone https://github.com/ethz-asl/asctec_mav_framework.git
+git clone https://github.com/catkin/catkin_simple.git
+git clone https://github.com/ethz-asl/glog_catkin.git
 ```
 Fix files:
 ```
-    gedit ~/catkin_ws/ssf_ws/src/asctec_mav_framework/asctec_hl_interface/src/comm.cpp
+gedit ~/catkin_ws/ssf_ws/src/asctec_mav_framework/asctec_hl_interface/src/comm.cpp
 ```
 
 change line 126 to: `uint32_t diff = abs((int)baudrates[i] - (int)*baudrate);`
 
-[!comm]()
+![comm](image/comm.png)
 
 ```
-    gedit ~/catkin_ws/ssf_ws/src/asctec_mav_framework/asctec_hl_interface/src/hl_interface.h
+gedit ~/catkin_ws/ssf_ws/src/asctec_mav_framework/asctec_hl_interface/src/hl_interface.h
 ```
 
 Change line 99 to: `constexpr static const double kDefaultMaxRCChannelValue = 4080;`
 
-[!interface]()
+![interface](image/interface.png)
 
 catkin build:
 ```
-    cd ~/catkin_ws/ssf_ws
-    catkin build
+cd ~/catkin_ws/ssf_ws
+catkin build
 ```
 
 ## 3. Build Viconpos sensor node
@@ -63,41 +63,43 @@ Rewrite file [plot_relevant](file/plot_relevant) in `~/catkin_ws/ssf_ws/src/ethz
 
 Rebuild catkin:
 ```
-    cd ~/catkin_ws/ssf_ws/
-    catkin build
+cd ~/catkin_ws/ssf_ws/
+catkin build
 ```
 # Run
 
 Download [dataset.bag](http://wiki.ros.org/ethzasl_sensor_fusion/Tutorials/Introductory%20Tutorial%20for%20Multi-Sensor%20Fusion%20Framework?action=AttachFile&do=view&target=dataset.bag).
 
-Save dataset to ~/catkin_ws/ssf_ws/
+Save dataset to `~/catkin_ws/ssf_ws/`
 
 Run:
 Terminal 1:
 ```
-    cd ~/catkin_ws/ssf_ws
-    source devel/setup.bash
-    roslaunch ssf_updates myviconpos_sensor.launch
+cd ~/catkin_ws/ssf_ws
+source devel/setup.bash
+roslaunch ssf_updates myviconpos_sensor.launch
 ```
 (Ctrl+Shift+T) Terminal 2:
 ```
-    source devel/setup.bash #read_note
-    rosrun rqt_reconfigure rqt_reconfigure
-    Inside rqt_reconfigure_Param window, on the left bar, choose myviconpos_sensor, click on init_filter box
+source devel/setup.bash #read_note
+rosrun rqt_reconfigure rqt_reconfigure
 ```
+
+Inside rqt_reconfigure_Param window, on the left bar, choose myviconpos_sensor, click on init_filter box
+![reconfigure](image/reconfigure.png)
+
 (Ctrl+Shift+T) Terminal 3:
 ```
-    source devel/setup.bash #read_note
-    rosrun ssf_core plot_relevant
+source devel/setup.bash #read_note
+rosrun ssf_core plot_relevant
 ```
 (Ctrl+Shift+T) Terminal 4:
 ```
-    rosbag play dataset.bag --pause -s 25
+rosbag play dataset.bag --pause -s 25
 ```
 Note: If you run on seprated terminal (instead of subterminal opened by Ctr+Shift+T), you need to source to absolute directory in each terminal:
 ```
-    source ~/catkin_ws/ssf_ws/devel/setup.bash
+source ~/catkin_ws/ssf_ws/devel/setup.bash
 ```
-on this terminal, press "Spacebar" to unpause
-see result in rqt_plot_Plot window
+On this terminal, press "Spacebar" to unpause. See result in rqt_plot_Plot window
 
