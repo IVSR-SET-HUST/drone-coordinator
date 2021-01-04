@@ -74,12 +74,12 @@ Setup:
     cd ~/catkin_ws/VINSMono_ws/src/VINS-Mono/config
     mkdir my_config
 ```
-Add [my_live_config.yaml]() and [my_live_config_no_extrinsic.yaml]() here.
+Add [my_live_config.yaml](my_live_config.yaml) and [my_live_config_no_extrinsic.yaml](my_live_config_no_extrinsic.yaml) here.
 ```
     cd ~/catkin_ws/VINSMono_ws/src/VINS-Mono/vins_estimator/launch
 ```
 
-Add [my_live.launch]() and [my_live_no_extrinsic_param.launch]() here.
+Add [my_live.launch](my_live.launch) and [my_live_no_extrinsic_param.launch](my_live_no_extrinsic_param.launch) here.
 
  **2.2 Run with extrinsic parameter**
  
