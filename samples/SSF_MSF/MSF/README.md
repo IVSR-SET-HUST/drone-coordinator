@@ -1,6 +1,6 @@
 # Installation
 
-Note: Change `~/catkin_ws/MSF_ROVIO_ws` to YOUR_WORKSPACE_DIRECTORY
+Note: Change `~/catkin_ws/MSF_ROVIO_ws` to `YOUR_WORKSPACE_DIRECTORY`
 ```
 cd ~/catkin_ws/MSF_ROVIO_ws/src
 git clone https://github.com/luongmanh1098/MSF_ROVIO.git
@@ -16,10 +16,12 @@ rovio (vio algorithm): https://github.com/ethz-asl/rovio
 
 python file for visualize result: https://gitlab.ethz.ch/huberya/msf_plotting_utility
 
+Note: It's good that you keep msf_plotting_utility outside ws because it contains only python file to visualize and save result.
+
 # Run
 Base on https://github.com/ethz-asl/ethzasl_msf/wiki/Robust-UAV-State-Estimation
 
-## 2.1. Run MSF+Rovio
+## 1. Run MSF+Rovio
 Download Dataset from EuroC MAV Dataset: https://projects.asl.ethz.ch/datasets/doku.php?id=kmavvisualinertialdatasets
 
 In this tutorial, we run with Vicon Room 1 03 (Download both ROS BAG and ASL Dataset Format to have full bag file + calibration + groundtruth)
@@ -36,7 +38,7 @@ roslaunch msf_updates my_pose_sensor_V1_03_difficult_confirmed.launch
 rosparam set /use_sim_time true
 rosrun rqt_reconfigure rqt_reconfigure
 ```
-Inside rqt_reconfigure_Param window, on the left bar, choose myviconpos_sensor, click on init_filter box, and then close this window.
+Inside rqt_reconfigure_Param window, on the left bar, choose pose_sensor, click on init_filter box, and then close this window.
 
 ```
 rosbag play Lab/bag_file/V1_03_difficult.bag --clock --pause
@@ -52,17 +54,17 @@ On Terminal 2, press Spacebar to unpause.
 
 Then, your bag file result will be stored in atkin_ws/MSF_ROVIO_ws/src/msf_plotting_utility/recording. Make sure to change your bag result name.
 
-## 2.1. Run MSF+Rovio+GPS
+## 2. Run MSF+Rovio+GPS
 
-Change file launch to `my_pose_position_sensor_V1_03_difficult_confirmed.launch`, do other command exactly the same as 2.1. Make sure to change your bag result name.
+Change file launch to `my_pose_position_sensor_V1_03_difficult_confirmed.launch`, do other command exactly the same as 1. Make sure to change your bag result name.
 
-## 2.2. Run Rovio only
+## 3. Run Rovio only
 
 Change file launch to `my_rovio_only_V1_03_difficult_confirmed.launch`
 
 Change line `./record_msf_only.sh` to `./record_rovio_only.sh`
 
-do other command exactly the same as 2.1. Make sure to change your bag result name.
+do other command exactly the same as 1. Make sure to change your bag result name.
 
 # Visualize result
 
