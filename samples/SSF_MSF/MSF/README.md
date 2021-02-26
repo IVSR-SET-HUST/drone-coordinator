@@ -60,9 +60,11 @@ Change file launch to `my_pose_position_sensor_V1_03_difficult_confirmed.launch`
 
 ## 3. Run Rovio only
 
-Change file launch to `my_rovio_only_V1_03_difficult_confirmed.launch`
+On terminal 1, Change file launch to `my_rovio_only_V1_03_difficult_confirmed.launch`
 
-Change line `./record_msf_only.sh` to `./record_rovio_only.sh`
+On terminal 2, you only need to run `rosbag play Lab/bag_file/V1_03_difficult.bag --clock --pause`
+
+On terminal 3, Change line `./record_msf_only.sh` to `./record_rovio_only.sh`
 
 do other command exactly the same as 1. Make sure to change your bag result name.
 
