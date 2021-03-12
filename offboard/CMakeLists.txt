@@ -13,13 +13,12 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
-  roslaunch
 )
 
 catkin_package(
    INCLUDE_DIRS include
 #  LIBRARIES offboard
-   CATKIN_DEPENDS geometry_msgs mavros_msgs roscpp rospy std_msgs
+   CATKIN_DEPENDS geometry_msgs mavros_msgs roscpp rospy std_msgs 
 #  DEPENDS system_lib
 )
 
@@ -34,24 +33,40 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-roslaunch_add_file_check(launch)
+add_library(
+  offboard_lib
+  src/offboard_lib.cpp
+)
+add_library(
+  logging_lib
+  src/logging_lib.cpp
+)
 
-add_executable(hovering src/hovering_node.cpp)
-target_link_libraries(hovering
+target_link_libraries(offboard_lib
+  ${catkin_LIBRARIES}
+)
+target_link_libraries(logging_lib
   ${catkin_LIBRARIES}
 )
 
 add_executable(offboard src/offboard_node.cpp)
-target_link_libraries(offboard
-  ${catkin_LIBRARIES}
-)
-
-add_executable(gps_offb src/gps_offb.cpp)
-target_link_libraries(gps_offb
-  ${catkin_LIBRARIES}
-)
-
+add_executable(hover src/hover_node.cpp)
+add_executable(logging src/logging_node.cpp)
 add_executable(setmode_offb src/setmode_offb.cpp)
+
+target_link_libraries(offboard
+  offboard_lib
+  logging_lib
+)
+target_link_libraries(hover
+  offboard_lib
+  logging_lib
+)
+target_link_libraries(logging
+  offboard_lib
+  logging_lib
+)
 target_link_libraries(setmode_offb
-  ${catkin_LIBRARIES}
+  offboard_lib
+  logging_lib
 )

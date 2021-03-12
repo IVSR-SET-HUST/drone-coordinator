@@ -1,0 +1,10 @@
+num_of_target: 4
+x_pos: [0, 6, 6, 0]
+y_pos: [0, 0, 6, 6]
+z_pos: [5, 5, 5, 5]
+target_error: 0.1
+num_of_goal: 3
+latitude: [21.006566, 21.006566, 21.006566]
+longitude: [105.842895, 105.842945, 105.842985]
+altitude: [-20, -20, -20]
+goal_error: 0.3

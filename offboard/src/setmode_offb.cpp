@@ -12,6 +12,18 @@ int main(int argc, char **argv)
         
     ros::Rate rate(20.0);
 
+    // arm
+    mavros_msgs::CommandBool arm_cmd;
+    arm_cmd.request.value = true;
+    if (arming_client.call(arm_cmd) && arm_cmd.response.success) 
+    {
+        ROS_INFO("Vehicle armed");
+    } 
+    else 
+    {
+        ROS_ERROR("Arming failed");
+    }
+
     // set mode
     mavros_msgs::SetMode offb_set_mode;
     offb_set_mode.request.base_mode = 0;
@@ -23,18 +35,6 @@ int main(int argc, char **argv)
     else 
     {
         ROS_ERROR("Failed to set OFFBOARD");
-    }
-
-    // arm
-    mavros_msgs::CommandBool arm_cmd;
-    arm_cmd.request.value = true;
-    if (arming_client.call(arm_cmd) && arm_cmd.response.success) 
-    {
-        ROS_INFO("Vehicle armed");
-    } 
-    else 
-    {
-        ROS_ERROR("Arming failed");
     }
 
     while (ros::ok()) 

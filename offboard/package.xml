@@ -2,7 +2,7 @@
 <package format="2">
   <name>offboard</name>
   <version>0.0.0</version>
-  <description>The offboard package</description>
+  <description>The IVSR offboard package</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag -->
   <!-- Example:  -->
@@ -17,7 +17,6 @@
   <build_depend>roscpp</build_depend>
   <build_depend>rospy</build_depend>
   <build_depend>std_msgs</build_depend>
-  <build_depend>roslaunch</build_depend>
   <build_export_depend>geometry_msgs</build_export_depend>
   <build_export_depend>mavros_msgs</build_export_depend>
   <build_export_depend>roscpp</build_export_depend>
@@ -28,7 +27,6 @@
   <exec_depend>roscpp</exec_depend>
   <exec_depend>rospy</exec_depend>
   <exec_depend>std_msgs</exec_depend>
-
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>
