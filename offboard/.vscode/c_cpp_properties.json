@@ -1,0 +1,32 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "",
+        "limitSymbolsToIncludedHeaders": true
+      },
+      "includePath": [
+        "/home/congtranv/ros/catkin_ws/devel/include/**",
+        "/opt/ros/melodic/include/**",
+        "/home/congtranv/ros/catkin_ws/src/eigen_checks/include/**",
+        "/home/congtranv/ros/catkin_ws/src/mav_comm/mav_msgs/include/**",
+        "/home/congtranv/ros/catkin_ws/src/mav_comm/mav_planning_msgs/include/**",
+        "/home/congtranv/ros/catkin_ws/src/mav_trajectory_generation/mav_trajectory_generation/include/**",
+        "/home/congtranv/ros/catkin_ws/src/mav_trajectory_generation/mav_trajectory_generation_example/include/**",
+        "/home/congtranv/ros/catkin_ws/src/mav_trajectory_generation/mav_trajectory_generation_ros/include/**",
+        "/home/congtranv/ros/catkin_ws/src/mav_trajectory_generation/mav_visualization/include/**",
+        "/home/congtranv/ros/catkin_ws/src/nlopt/include/**",
+        "/home/congtranv/ros/catkin_ws/src/offboard/include/**",
+        "/home/congtranv/ros/catkin_ws/src/ros_viz/include/**",
+        "/home/congtranv/ros/catkin_ws/src/rotors_simulator/rotors_control/include/**",
+        "/home/congtranv/ros/catkin_ws/src/rotors_simulator/rotors_gazebo_plugins/include/**",
+        "/home/congtranv/ros/catkin_ws/src/rotors_simulator/rotors_hil_interface/include/**",
+        "/home/congtranv/ros/catkin_ws/src/rotors_simulator/rotors_joy_interface/include/**",
+        "/home/congtranv/ros/catkin_ws/src/subpub/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS"
+    }
+  ],
+  "version": 4
+}

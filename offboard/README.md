@@ -1,58 +1,82 @@
-# ivsr offboard package
+# IVSR OFFBOARD package
 
-## contain
+***
+**WARNING**
+
+*OFFBOARD* control is dangerous. 
+
+If you are operating on a real vehicle be sure to have a way of gaining back manual control in case something goes wrong.
+***
+
+## Contain
 - *include/offboard/offboard.h* : header offboard
-- *include/offboard/logging.h*  : header logging
 
-- *src/hover_node.cpp*      : keep drone hovering on input z height
-- *src/offboard_node.cpp*   : keep drone flying follow waypoints (local or global)
-- *src/logging_node.cpp*    : get data and write into "position.csv", "sensor.csv" files that at current working directory
+- *src/offboard_node.cpp*   : offboard node
 - *src/offboard_lib.cpp*    : library for offboard node
-- *src/logging_lib.cpp*     : library for logging node
 - *src/setmode_offb.cpp*    : set OFFBOARD mode and ARM vehicle in simulation
 
-- *config/waypoints.yaml*   : prepared waypoints to load into offboard node
-- *package.xml*             : ros manifests
-- *CMakeLists.txt*          : CMakeLists
+- *config/config.yaml*      : prepared params to load into offboard node
 
-## required
-- **ros**             : tested on Melodic (Ubuntu 18.04)
-- **PX4**             : tested on v10.0.1 
-- **catkin workspace**: `catkin_ws`
-- **mavros**          : [here](https://dev.px4.io/master/en/ros/mavros_installation.html)
+- *launch/offboard.launch*  : launch file
 
+## Required
+- **ROS**             : tested on Melodic (Ubuntu 18.04)
+- **PX4 Firmware**    : tested on v10.0.1 - setup [here](https://github.com/congtranv/Firmware)
+- **Catkin workspace**: `catkin_ws`
+- **MAVROS**          : binary installation - setup [here](https://docs.px4.io/master/en/ros/mavros_installation.html#binary-installation-debian-ubuntu)
+
+***
 - **git clone `offboard` to `catkin_ws/src/` and build `catkin build`**
+***
 
-## usage
+## Usage
+***
+*Before run OFFBOARD node, check and modify (if need) the value of parameters in* **config/config.yaml**
 
-### connect to pixhawk or run simulation
-#### on jetson
-- *connect jetson to pixhawk* 
+*These parameters would be load at first when launch OFFBOARD node*
+***
 
-- `roslaunch mavros px4.launch fcu_url:=/dev/ttyTHS1:921600`
-#### run simulation
-- `roslaunch px4 mavros_posix_sitl.launch`
+### 1. Simulation
+#### 1.1 Run simulation
+- run command:
+```
+roslaunch px4 mavros_posix_sitl.launch
+```
+- or run script at [here](https://github.com/congtranv/bash):
+```
+sh px4simulation.sh
+```
 
-### after connected to pixhawk 4 or run simulation, run:
-#### hovering node
-- *run hover_node*                 : `rosrun offboard hover`
-- **check current position on screen**
+#### 1.2 Run OFFBOARD node
+```
+roslaunch offboard offboard.launch
+```
+There 2 functions:
+- HOVERING: drone hover at `z` meters (input from keyboard) in `hover_time` seconds (change in config/config.yaml)
+- OFFBOARD: fly with the local/global setpoints that prepared in config/config.yaml or input from keyboard
 
-  **input target height for hovering (in meter): z**
-  
-- **on remote controller** switch to ARM, then switch flight mode to OFFBOARD
+#### 1.3 ARM and switch to OFFBOARD mode
+```
+rosrun offboard setmode_offb
+```
+### 2. Practice
+#### 2.1 Connect Companion PC to Pixhawk 4 
+- run command:
+```
+roslaunch mavros px4.launch fcu_url:=/dev/ttyTHS1:921600
+```
+- or run script:
+```
+sh connect_px4.sh
+```
 
-  on simualation: `rosrun offboard setmode_offb`
-### or:
-#### offboard node
-- *run offboard_node*                 : `rosrun offboard offboard`
-- **manual input or load input from waypoints.yaml config file**
-  
-- **on remote controller** switch to ARM, then switch flight mode to OFFBOARD
+#### 2.2 Run OFFBOARD node
+```
+roslaunch offboard offboard.launch
+```
+There 2 functions:
+- HOVERING: drone hover at `z` meters (input from keyboard) in `hover_time` seconds (change in config/config.yaml)
+- OFFBOARD: fly with the local/global setpoints that prepared in config/config.yaml or input from keyboard
 
-  on simualation: `rosrun offboard setmode_offb`
-
-### run logging node along
-#### logging node
-- *run logging_node*                 : `rosrun offboard logging`
-
+#### 2.3 ARM and switch to OFFBOARD mode
+Use Remote controller to ARM and switch flight mode to OFFBOARD

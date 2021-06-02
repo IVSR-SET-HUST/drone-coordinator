@@ -1,0 +1,12 @@
+<launch>
+    <!-- <arg name="fcu_url" default="udp://:14540@localhost:14557"/>
+    <arg name="respawn_mavros" default="false"/>
+    <include file="$(find mavros)/launch/px4.launch">
+        <arg name="gcs_url" value=""/>
+        <arg name="fcu_url" value="$(arg fcu_url)"/>
+        <arg name="respawn_mavros" value="$(arg respawn_mavros)"/>
+    </include> -->
+  
+    <rosparam command="load" file="$(find offboard)/config/config.yaml" />
+    <node name="offboard_node" pkg="offboard" type="offboard_node" output="screen"></node>
+</launch>

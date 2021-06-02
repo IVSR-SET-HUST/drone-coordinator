@@ -1,0 +1,22 @@
+number_of_target: 4
+x_pos: [0, 6, 6, 0] # in meter
+y_pos: [0, 0, 6, 6] # in meter
+z_pos: [5, 5, 5, 5] # in meter
+target_error: 0.1   # in meter
+
+number_of_goal: 3
+latitude: [21.0065275, 21.0065305, 21.0065295]      # in degree
+longitude: [105.8428991, 105.8432921, 105.8430000]  # in degree
+altitude: [7, 7, 7] # in meter.above ground
+goal_error: 0.1     # in meter
+
+z_takeoff: 3        # in meter
+land_error: 0.2
+
+takeoff_hover_time: 10 # in second
+hover_time: 10         # in second
+unpack_time: 15        # in second
+
+desired_velocity: 0.3 # m/s
+land_velocity: 0.7    # m/s
+return_velcity: 1     # m/s
