@@ -1,0 +1,3 @@
+AXIS=$1
+python pyplot_rosbag_positions_multi.py $AXIS recordings/no_recovery_no_learning_bad_initial.bag recordings/no_recovery_no_learning_good_initial.bag recordings/recovery_no_learning_good_initial.bag recordings/recovery_learning_bad_initial.bag 
+

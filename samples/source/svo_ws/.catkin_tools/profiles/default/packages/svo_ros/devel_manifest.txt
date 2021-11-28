@@ -1,0 +1,8 @@
+rpg_svo/svo_ros
+/home/manh/catkin_ws/svo_ws/devel/.private/svo_ros/cmake.lock /home/manh/catkin_ws/svo_ws/devel/./cmake.lock
+/home/manh/catkin_ws/svo_ws/devel/.private/svo_ros/lib/libsvo_visualizer.so /home/manh/catkin_ws/svo_ws/devel/lib/libsvo_visualizer.so
+/home/manh/catkin_ws/svo_ws/devel/.private/svo_ros/lib/svo_ros/benchmark /home/manh/catkin_ws/svo_ws/devel/lib/svo_ros/benchmark
+/home/manh/catkin_ws/svo_ws/devel/.private/svo_ros/lib/svo_ros/vo /home/manh/catkin_ws/svo_ws/devel/lib/svo_ros/vo
+/home/manh/catkin_ws/svo_ws/devel/.private/svo_ros/lib/pkgconfig/svo_ros.pc /home/manh/catkin_ws/svo_ws/devel/lib/pkgconfig/svo_ros.pc
+/home/manh/catkin_ws/svo_ws/devel/.private/svo_ros/share/svo_ros/cmake/svo_rosConfig-version.cmake /home/manh/catkin_ws/svo_ws/devel/share/svo_ros/cmake/svo_rosConfig-version.cmake
+/home/manh/catkin_ws/svo_ws/devel/.private/svo_ros/share/svo_ros/cmake/svo_rosConfig.cmake /home/manh/catkin_ws/svo_ws/devel/share/svo_ros/cmake/svo_rosConfig.cmake

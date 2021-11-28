@@ -1,0 +1,17 @@
+<!-- this is a sample launch file to run MSF with rovio and position Input from Vicon-->
+<launch>
+    <node  name="msf_position_pose_sensor" pkg="msf_updates" type="position_pose_sensor" clear_params="true" output="screen">
+        <remap from="msf_core/imu_state_input" to="/mavros/imu/data" />
+        <rosparam file="$(find msf_updates)/yaml_file/my_position_pose.yaml"/>
+        <remap from="msf_updates/position_input" to="/position_output" />
+        <remap from="msf_updates/pose_with_covariance_input" to="/rovio/pose_with_covariance_stamped" />
+        <param name="capability_group" value="MSF" />
+    </node>    
+	<node name="rovio" pkg="rovio" type="rovio_node" output="screen">
+        	<param name="filter_config" value="$(find rovio)/cfg/rovio_18_20.info"/>
+        	<param name="camera0_config" value="$(find rovio)/cfg/rovio_13_17.yaml"/>
+   		<remap from="cam0/image_raw" to="/camera/color/image_mono"/>
+		<remap from="imu0" to="/mavros/imu/data"/>
+    	</node>
+    <node name="convert_msgs" pkg="subpub" type="target_pub"></node>
+</launch>

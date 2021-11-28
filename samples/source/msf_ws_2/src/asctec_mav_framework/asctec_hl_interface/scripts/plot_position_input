@@ -1,0 +1,4 @@
+#!/bin/bash
+
+echo " ### plotting  position input x, y, z [m] in NED coordinates !!! ###"
+rqt_plot $1/fcu/debug/data[22]:data[23]:data[3]

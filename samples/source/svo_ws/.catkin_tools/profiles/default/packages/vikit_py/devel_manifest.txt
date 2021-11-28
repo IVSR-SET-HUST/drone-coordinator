@@ -1,0 +1,6 @@
+rpg_vikit/vikit_py
+/home/manh/catkin_ws/svo_ws/devel/.private/vikit_py/cmake.lock /home/manh/catkin_ws/svo_ws/devel/./cmake.lock
+/home/manh/catkin_ws/svo_ws/devel/.private/vikit_py/lib/pkgconfig/vikit_py.pc /home/manh/catkin_ws/svo_ws/devel/lib/pkgconfig/vikit_py.pc
+/home/manh/catkin_ws/svo_ws/devel/.private/vikit_py/lib/python2.7/dist-packages/vikit_py/__init__.py /home/manh/catkin_ws/svo_ws/devel/lib/python2.7/dist-packages/vikit_py/__init__.py
+/home/manh/catkin_ws/svo_ws/devel/.private/vikit_py/share/vikit_py/cmake/vikit_pyConfig.cmake /home/manh/catkin_ws/svo_ws/devel/share/vikit_py/cmake/vikit_pyConfig.cmake
+/home/manh/catkin_ws/svo_ws/devel/.private/vikit_py/share/vikit_py/cmake/vikit_pyConfig-version.cmake /home/manh/catkin_ws/svo_ws/devel/share/vikit_py/cmake/vikit_pyConfig-version.cmake

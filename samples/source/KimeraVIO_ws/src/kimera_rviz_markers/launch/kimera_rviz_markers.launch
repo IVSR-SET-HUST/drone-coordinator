@@ -1,0 +1,18 @@
+<launch>
+  <arg name="argument" default="0"/>
+
+  <node name="kimera_rviz_markers" pkg="kimera_rviz_markers"
+  type="kimera_rviz_markers" output="screen" args="">
+    <remap from="drone_markers" to="drone_markers"/>
+
+    <param name="frame_id" value="base_link"/>
+    <param name="scale" value="0.0"/>
+    <param name="num_rotors" value="4"/>
+    <param name="arm_len" value="0.22"/>
+    <param name="body_width" value="0.15"/>
+    <param name="body_height" value="0.10"/>
+    <param name="r_color" value="0.0"/>
+    <param name="g_color" value="1.0"/>
+    <param name="b_color" value="0.0"/>
+  </node>
+</launch>

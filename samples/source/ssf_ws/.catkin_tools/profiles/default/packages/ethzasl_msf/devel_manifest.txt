@@ -1,0 +1,2 @@
+ethzasl_msf/ethzasl_msf
+/home/manh/catkin_ws/msf_ws/devel/.private/ethzasl_msf/cmake.lock /home/manh/catkin_ws/msf_ws/devel/./cmake.lock

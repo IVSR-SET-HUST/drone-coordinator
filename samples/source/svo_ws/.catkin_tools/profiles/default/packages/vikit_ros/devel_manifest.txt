@@ -1,0 +1,6 @@
+rpg_vikit/vikit_ros
+/home/manh/catkin_ws/svo_ws/devel/.private/vikit_ros/cmake.lock /home/manh/catkin_ws/svo_ws/devel/./cmake.lock
+/home/manh/catkin_ws/svo_ws/devel/.private/vikit_ros/lib/libvikit_ros.so /home/manh/catkin_ws/svo_ws/devel/lib/libvikit_ros.so
+/home/manh/catkin_ws/svo_ws/devel/.private/vikit_ros/lib/pkgconfig/vikit_ros.pc /home/manh/catkin_ws/svo_ws/devel/lib/pkgconfig/vikit_ros.pc
+/home/manh/catkin_ws/svo_ws/devel/.private/vikit_ros/share/vikit_ros/cmake/vikit_rosConfig.cmake /home/manh/catkin_ws/svo_ws/devel/share/vikit_ros/cmake/vikit_rosConfig.cmake
+/home/manh/catkin_ws/svo_ws/devel/.private/vikit_ros/share/vikit_ros/cmake/vikit_rosConfig-version.cmake /home/manh/catkin_ws/svo_ws/devel/share/vikit_ros/cmake/vikit_rosConfig-version.cmake

@@ -1,0 +1,1 @@
+rosbag record -o ./recordings/ /clock /msf_core/state_out /noise_drift_handler/events /noise_drift_handler/pose_output /noise_drift_handler/position_output /rovio_divergence_handler/events /vicon/firefly_sbx/firefly_sbx /pos_to_error/output /raven/gps

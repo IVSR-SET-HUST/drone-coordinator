@@ -1,0 +1,13 @@
+image_width: 640
+image_height: 480
+camera_name: camr
+camera_matrix:
+  rows: 3
+  cols: 3
+  data: [606.533473305, 0.0, 306.394116241, 0.0, 605.882375948, 253.847218835, 0.0, 0.0, 1.0]
+distortion_model: plumb_bob
+distortion_coefficients:
+  rows: 1
+  cols: 5
+  data: [0.125366536521, -0.283600285867, 0.00438764355061, -0.00459565852779, 0.0]
+

@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>mesh_rviz_plugins</name>
+  <version>1.0.0</version>
+  <description>ROS bindings for flame.</description>
+  <maintainer email="arosinol@mit.edu">Antoni Rosinol</maintainer>
+  <license>GPLv3</license>
+  <url type="website">https://github.com/robustrobotics/flame_ros</url>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <buildtool_depend>catkin_simple</buildtool_depend>
+
+  <depend>Boost</depend>
+  <depend>roscpp</depend>
+  <depend>std_msgs</depend>
+  <depend>sensor_msgs</depend>
+  <depend>nav_msgs</depend>
+
+  <depend>pcl_ros</depend>
+  <depend>pcl_msgs</depend>
+  <depend>pcl_conversions</depend>
+
+<!--
+  <depend>libpcl-all-dev</depend>
+  -->
+
+  <depend>nodelet</depend>
+  <depend>cv_bridge</depend>
+  <depend>message_generation</depend>
+  <depend>message_runtime</depend>
+  <depend>image_geometry</depend>
+  <depend>camera_info_manager</depend>
+  <depend>rviz</depend>
+
+  <!-- The export tag contains other, unspecified, tags -->
+  <export>
+    <!-- Other tools can request additional information be placed here -->
+    <rviz plugin="${prefix}/mesh_rviz_plugins.xml"/>
+  </export>
+</package>
