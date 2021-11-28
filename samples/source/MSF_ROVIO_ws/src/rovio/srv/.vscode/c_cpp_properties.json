@@ -1,0 +1,26 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "",
+        "limitSymbolsToIncludedHeaders": true
+      },
+      "includePath": [
+        "/home/manh/catkin_ws/ssf_ws/devel/include/**",
+        "/home/manh/catkin_ws/MSF_ROVIO_ws/devel/include/**",
+        "/opt/ros/melodic/include/**",
+        "/home/manh/catkin_ws/MSF_ROVIO_ws/src/asctec_mav_framework/asctec_hl_comm/include/**",
+        "/home/manh/catkin_ws/MSF_ROVIO_ws/src/kindr/include/**",
+        "/home/manh/catkin_ws/MSF_ROVIO_ws/src/ethzasl_msf/msf_core/include/**",
+        "/home/manh/catkin_ws/MSF_ROVIO_ws/src/ethzasl_msf/msf_timing/include/**",
+        "/home/manh/catkin_ws/MSF_ROVIO_ws/src/ethzasl_msf/msf_updates/include/**",
+        "/home/manh/catkin_ws/MSF_ROVIO_ws/src/rovio/include/**",
+        "/home/manh/catkin_ws/ssf_ws/src/ethzasl_sensor_fusion/ssf_core/include/**",
+        "/home/manh/catkin_ws/MSF_ROVIO_ws/src/subpub/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS"
+    }
+  ],
+  "version": 4
+}

@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>opengv_catkin</name>
+  <version>0.0.1</version>
+  <description>OpenGV catkin wrapper</description>
+  <maintainer email="arosinol@mit.edu">Antoni Rosinol</maintainer>
+
+  <license>MIT</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <buildtool_depend>catkin_simple</buildtool_depend>
+
+  <depend>eigen_catkin</depend>
+
+</package>

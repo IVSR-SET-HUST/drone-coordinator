@@ -1,0 +1,6 @@
+<!-- this is a sample launch file to run MSF with rovio and position Input from Vicon-->
+<launch>
+    <!-- this is the main MSF node. The name is used to access this node (from other nodes/utilities)-->
+    <node  name="convert_msgs" pkg="subpub" type="target_pub"></node>    
+
+</launch>

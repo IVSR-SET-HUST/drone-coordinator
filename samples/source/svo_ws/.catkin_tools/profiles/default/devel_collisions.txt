@@ -1,0 +1,1 @@
+/home/manh/catkin_ws/svo_ws/devel/./cmake.lock 16

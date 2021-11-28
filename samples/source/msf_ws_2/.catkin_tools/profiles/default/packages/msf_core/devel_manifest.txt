@@ -1,0 +1,14 @@
+ethzasl_msf/msf_core
+/home/manh/catkin_ws/msf_ws_2/devel/.private/msf_core/cmake.lock /home/manh/catkin_ws/msf_ws_2/devel/./cmake.lock
+/home/manh/catkin_ws/msf_ws_2/devel/.private/msf_core/share/msf_core/cmake/msf_coreConfig-version.cmake /home/manh/catkin_ws/msf_ws_2/devel/share/msf_core/cmake/msf_coreConfig-version.cmake
+/home/manh/catkin_ws/msf_ws_2/devel/.private/msf_core/share/msf_core/cmake/msf_coreConfig.cmake /home/manh/catkin_ws/msf_ws_2/devel/share/msf_core/cmake/msf_coreConfig.cmake
+/home/manh/catkin_ws/msf_ws_2/devel/.private/msf_core/share/msf_core/docs/MSF_CoreConfig.wikidoc /home/manh/catkin_ws/msf_ws_2/devel/share/msf_core/docs/MSF_CoreConfig.wikidoc
+/home/manh/catkin_ws/msf_ws_2/devel/.private/msf_core/share/msf_core/docs/MSF_CoreConfig-usage.dox /home/manh/catkin_ws/msf_ws_2/devel/share/msf_core/docs/MSF_CoreConfig-usage.dox
+/home/manh/catkin_ws/msf_ws_2/devel/.private/msf_core/share/msf_core/docs/MSF_CoreConfig.dox /home/manh/catkin_ws/msf_ws_2/devel/share/msf_core/docs/MSF_CoreConfig.dox
+/home/manh/catkin_ws/msf_ws_2/devel/.private/msf_core/lib/libsimilaritytransform.so /home/manh/catkin_ws/msf_ws_2/devel/lib/libsimilaritytransform.so
+/home/manh/catkin_ws/msf_ws_2/devel/.private/msf_core/lib/libmsf_core.so /home/manh/catkin_ws/msf_ws_2/devel/lib/libmsf_core.so
+/home/manh/catkin_ws/msf_ws_2/devel/.private/msf_core/lib/pkgconfig/msf_core.pc /home/manh/catkin_ws/msf_ws_2/devel/lib/pkgconfig/msf_core.pc
+/home/manh/catkin_ws/msf_ws_2/devel/.private/msf_core/lib/python2.7/dist-packages/msf_core/__init__.py /home/manh/catkin_ws/msf_ws_2/devel/lib/python2.7/dist-packages/msf_core/__init__.py
+/home/manh/catkin_ws/msf_ws_2/devel/.private/msf_core/lib/python2.7/dist-packages/msf_core/cfg/__init__.py /home/manh/catkin_ws/msf_ws_2/devel/lib/python2.7/dist-packages/msf_core/cfg/__init__.py
+/home/manh/catkin_ws/msf_ws_2/devel/.private/msf_core/lib/python2.7/dist-packages/msf_core/cfg/MSF_CoreConfig.py /home/manh/catkin_ws/msf_ws_2/devel/lib/python2.7/dist-packages/msf_core/cfg/MSF_CoreConfig.py
+/home/manh/catkin_ws/msf_ws_2/devel/.private/msf_core/include/msf_core/MSF_CoreConfig.h /home/manh/catkin_ws/msf_ws_2/devel/include/msf_core/MSF_CoreConfig.h

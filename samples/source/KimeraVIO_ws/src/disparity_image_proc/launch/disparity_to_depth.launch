@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+
+<launch>
+  <arg name="left_cam_info"    default="/left/camera_info"/>
+  <arg name="right_cam_info"   default="/right/camera_info"/>
+  <arg name="disparity"        default="/disparity"/>
+  <arg name="depth_img"        default="depth/image_raw"/>
+  <node pkg="nodelet" type="nodelet" name="stereo_proc"  args="manager"/>
+  <node name="disparity_image_proc" pkg="nodelet" type="nodelet"
+  args="load disparity_image_proc/depth_image stereo_proc" output="screen">
+    <!-- Inputs -->
+    <remap from="disparity"             to="$(arg disparity)"/>
+    <remap from="left/camera_info"      to="$(arg left_cam_info)"/>
+    <remap from="right/camera_info"     to="$(arg right_cam_info)"/>
+    <!-- Output -->
+    <remap from="~depth_image"          to="~$(arg depth_img)"/>
+    <!-- Params -->
+    <param name="queue_size"         value="5"/>
+    <param name="approximate_sync"   value="true"/>
+  </node>
+</launch>

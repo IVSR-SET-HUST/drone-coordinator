@@ -1,0 +1,20 @@
+<!-- this is a sample launch file to run MSF with rovio and position Input from Vicon-->
+<launch>
+    <!-- this is the main MSF node. The name is used to access this node (from other nodes/utilities)-->
+    <node  name="msf_pose_sensor" pkg="msf_updates" type="pose_sensor" clear_params="true" output="screen">
+	<!-- this is used to remap output from one topic to input of another. usage: remap from="input_name" to="output_name"-->
+        <remap from="msf_core/imu_state_input" to="fcu/imu" />
+        <!--this is how to select a parameters file-->
+        <rosparam file="$(find msf_updates)/VH_data/my_msf_sensor_fix_V1_03_difficult_V2.yaml"/>
+        <remap from="msf_updates/pose_with_covariance_input" to="/rovio/pose_with_covariance_stamped" />
+    </node>    
+
+    <!-- this is the Rovio node. Parameters and options are similar to MSF. It is required to run MSF with pose from camera-->
+    <node name="rovio" pkg="rovio" type="rovio_node" output="screen">
+        <param name="filter_config" value="$(find rovio)/cfg/rovio.info"/>
+        <param name="camera0_config" value="$(find rovio)/cfg/euroc_cam0.yaml"/>
+        <param name="camera1_config" value="$(find rovio)/cfg/euroc_cam1.yaml"/>
+    	<remap from="cam0/image_raw" to="cam0/image_raw"/>
+	<remap from="cam1/image_raw" to="cam1/image_raw"/>
+    </node>
+</launch>

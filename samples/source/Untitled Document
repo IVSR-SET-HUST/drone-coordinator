@@ -1,0 +1,26 @@
+ 1956  git clone https://github.com/PointCloudLibrary/pcl.git pcl-trunk
+
+ 1989  cd pcl-trunk && mkdir build && cd build
+ 1990  cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo ..
+ 1991  make -j2
+ 1997  sudo make -j2 install
+
+
+
+
+
+roslaunch lio_sam my_run_campus_small.launch
+rosbag play ~/Lab/bag_file/campus_small_dataset.bag -r 3
+
+
+cd catkin_ws/aloam_ws/
+  171  source devel/setup.bash 
+  172  roslaunch aloam_velodyne aloam_velodyne_VLP_16.launch 
+
+rosbag play ~/Lab/bag_file/nsh_indoor_outdoor.bag 
+
+
+  175  cd catkin_ws/floam_ws/
+  176  source devel/setup.bash 
+  177  roslaunch floam floam_velodyne.launch 
+
