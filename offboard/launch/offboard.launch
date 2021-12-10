@@ -1,0 +1,33 @@
+<launch>
+    <arg name="delivery" default="false"/>
+    <arg name="simulation" default="false"/>
+    <arg name="return_home" default="false"/>
+  
+    <!-- <rosparam command="load" file="$(find offboard)/config/config.yaml" /> -->
+    <node name="offboard_node" pkg="offboard" type="offboard_node" output="screen">
+        <param name="delivery" type="bool" value="$(arg delivery)"/>
+        <param name="simulation" type="bool" value="$(arg simulation)"/>
+        <param name="return_home" type="bool" value="$(arg return_home)"/>
+        
+        <param name="number_of_target" type="int" value="4"/>
+        <param name="target_error" type="double" value="0.1"/>
+        <rosparam param="x_pos">[0.0, 6.0, 6.0, 0.0]</rosparam>
+        <rosparam param="y_pos">[0.0, 0.0, 6.0, 6.0]</rosparam>
+        <rosparam param="z_pos">[5.0, 5.0, 5.0, 5.0]</rosparam>
+        <param name="number_of_goal" type="int" value="3"/>
+        <param name="goal_error" type="double" value="0.2"/>
+        <rosparam param="latitude">[21.0065275, 21.0065305, 21.0065295]</rosparam>
+        <rosparam param="longitude">[105.8428991, 105.8432921, 105.8430000]</rosparam>
+        <rosparam param="altitude">[7.0, 7.0, 7.0]</rosparam>
+
+        <param name="z_takeoff" type="double" value="3.0"/>
+        <param name="land_error" type="double" value="0.2"/>
+        <param name="takeoff_hover_time" type="double" value="10.0"/>
+        <param name="hover_time" type="double" value="10.0"/>
+        <param name="unpack_time" type="double" value="15.0"/>
+        <param name="desired_velocity" type="double" value="0.3"/>
+        <param name="land_velocity" type="double" value="0.7"/>
+        <param name="return_velcity" type="double" value="1.0"/>
+
+    </node>
+</launch>

@@ -1,4 +1,6 @@
-#include "offboard/offboard.h"
+#include <ros/ros.h>
+#include <mavros_msgs/SetMode.h>
+#include <mavros_msgs/CommandBool.h>
 
 int main(int argc, char **argv) 
 {
@@ -10,7 +12,7 @@ int main(int argc, char **argv)
     ros::ServiceClient set_mode_client = nh.serviceClient<mavros_msgs::SetMode> 
             ("mavros/set_mode");
         
-    ros::Rate rate(20.0);
+    ros::Rate rate(10.0);
 
     // arm
     mavros_msgs::CommandBool arm_cmd;
