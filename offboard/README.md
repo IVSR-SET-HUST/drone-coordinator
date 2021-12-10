@@ -1,58 +1,72 @@
-# ivsr offboard package
+# IVSR OFFBOARD package
 
-## contain
-- *include/offboard/offboard.h* : header offboard
-- *include/offboard/logging.h*  : header logging
+***
+## <span style="color:red">!!! WARNING
 
-- *src/hover_node.cpp*      : keep drone hovering on input z height
-- *src/offboard_node.cpp*   : keep drone flying follow waypoints (local or global)
-- *src/logging_node.cpp*    : get data and write into "position.csv", "sensor.csv" files that at current working directory
-- *src/offboard_lib.cpp*    : library for offboard node
-- *src/logging_lib.cpp*     : library for logging node
-- *src/setmode_offb.cpp*    : set OFFBOARD mode and ARM vehicle in simulation
+<span style="color:yellow">__*OFFBOARD* control is dangerous.__
 
-- *config/waypoints.yaml*   : prepared waypoints to load into offboard node
-- *package.xml*             : ros manifests
-- *CMakeLists.txt*          : CMakeLists
+<span style="color:yellow">**If you are operating on a real vehicle be sure to have a way of gaining back manual control in case something goes wrong.**
+***
 
-## required
-- **ros**             : tested on Melodic (Ubuntu 18.04)
-- **PX4**             : tested on v10.0.1 
-- **catkin workspace**: `catkin_ws`
-- **mavros**          : [here](https://dev.px4.io/master/en/ros/mavros_installation.html)
+## Contain
+- <span style="color:orange">*include/offboard/offboard.h*</span> : header offboard
 
-- **git clone `offboard` to `catkin_ws/src/` and build `catkin build`**
+- <span style="color:orange">*src/offboard_node.cpp*</span>   : offboard node source code
+- <span style="color:orange">*src/offboard_lib.cpp*</span>    : library for offboard node
+- <span style="color:orange">*src/setmode_offb.cpp*</span>    : set OFFBOARD mode and ARM vehicle in simulation
+- <span style="color:orange">*launch/offboard.launch*</span>  : launch file, include parameter
 
-## usage
+## Required
+- <span style="color:orange">**ROS**</span>             : tested on ROS Melodic (Ubuntu 18.04)
+- <span style="color:orange">**PX4 Firmware**</span>    : tested on v10.0.1 - setup [here](https://github.com/congtranv/px4_install)
+- <span style="color:orange">**Catkin workspace**</span>: `catkin_ws`
+  ```
+  ## create a workspace if you've not had one
+  mkdir -p [path/to/ws]/catkin_ws/src
+  cd [path/to/ws]/catkin_ws
+  catkin_init_workspace
+  rosdep install --from-paths src --ignore-src -y 
+  catkin build
+  ```
+- <span style="color:orange">**MAVROS**</span>          : binary installation - setup [here](https://docs.px4.io/master/en/ros/mavros_installation.html#binary-installation-debian-ubuntu)
 
-### connect to pixhawk or run simulation
-#### on jetson
-- *connect jetson to pixhawk* 
+- <span style="color:orange">**OFFBOARD**</span>
+  ```
+  cd [path/to/ws]/catkin_ws/src
+  git clone https://github.com/congtranv/offboard.git
+  cd [path/to/ws]/catkin_ws
+  catkin build offboard
+  ```
 
-- `roslaunch mavros px4.launch fcu_url:=/dev/ttyTHS1:921600`
-#### run simulation
-- `roslaunch px4 mavros_posix_sitl.launch`
+## Usage
+***
+### <span style="color:green">*Before run OFFBOARD node, check and modify (if need) the value of parameters in* **launch/offboard.launch**
+***
+### There 2 main functions:
+- <span style="color:violet">HOVERING</span>: drone hover at `z` meters (input from keyboard) in `hover_time` seconds (change in launch/offboard.launch)
+- <span style="color:violet">MISSION</span>: fly with the local/GPS setpoints that prepared in launch/offboard.launch or input from keyboard
+### <span style="color:green">Refer the [test_case.md](test_case.md) for all detail use cases of OFFBOARD node
 
-### after connected to pixhawk 4 or run simulation, run:
-#### hovering node
-- *run hover_node*                 : `rosrun offboard hover`
-- **check current position on screen**
+### <span style="color:yellow">1. Simulation (SITL)
+#### <span style="color:cyan">1.1 Run PX4 simulation
+```
+roslaunch px4 mavros_posix_sitl.launch
+```
+#### <span style="color:cyan">1.2 Run OFFBOARD node
+```
+roslaunch offboard offboard.launch simulation:=true
+```
+### <span style="color:yellow">2. Practice in test field
 
-  **input target height for hovering (in meter): z**
-  
-- **on remote controller** switch to ARM, then switch flight mode to OFFBOARD
+##### <span style="color:green">***(can use for HITL simulation)***
 
-  on simualation: `rosrun offboard setmode_offb`
-### or:
-#### offboard node
-- *run offboard_node*                 : `rosrun offboard offboard`
-- **manual input or load input from waypoints.yaml config file**
-  
-- **on remote controller** switch to ARM, then switch flight mode to OFFBOARD
-
-  on simualation: `rosrun offboard setmode_offb`
-
-### run logging node along
-#### logging node
-- *run logging_node*                 : `rosrun offboard logging`
-
+#### <span style="color:cyan">2.1 Connect Companion PC to Pixhawk 4 
+```
+roslaunch mavros px4.launch fcu_url:=/dev/ttyTHS1:921600
+```
+#### <span style="color:cyan">2.2 Run OFFBOARD node
+```
+roslaunch offboard offboard.launch
+```
+#### <span style="color:cyan">2.3 ARM and switch to OFFBOARD mode
+Use Remote controller to ARM and switch flight mode to OFFBOARD
