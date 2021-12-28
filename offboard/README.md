@@ -18,7 +18,7 @@
 
 ## Required
 - **ROS**: tested on [ROS Melodic](http://wiki.ros.org/melodic/Installation/Ubuntu) (Ubuntu     18.04)
-- **PX4 Firmware**: tested on v10.0.1 - setup [here](https://github.com/congtranv/px4_insta    ll)
+- **PX4 Firmware**: tested on v10.0.1 - setup [here](https://github.com/congtranv/px4_install)
 - **Catkin workspace**: `catkin_ws`
   ```
   ## create a workspace if you've not had one
@@ -32,7 +32,7 @@
   catkin config --merge-devel
   catkin build
   ```
-- **MAVROS**: binary installation - setup [here](https://docs.px4.io/master/en/ros/mavros_i    nstallation.html#binary-installation-debian-ubuntu)
+- **MAVROS**: binary installation - setup [here](https://docs.px4.io/master/en/ros/mavros_installation.html#binary-installation-debian-ubuntu)
 
 - **OFFBOARD**
   ```
