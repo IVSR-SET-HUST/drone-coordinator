@@ -17,27 +17,31 @@
 - <span style="color:orange">*launch/offboard.launch*</span>  : launch file, include parameter
 
 ## Required
-- <span style="color:orange">**ROS**</span>             : tested on ROS Melodic (Ubuntu 18.04)
-- <span style="color:orange">**PX4 Firmware**</span>    : tested on v10.0.1 - setup [here](https://github.com/congtranv/px4_install)
-- <span style="color:orange">**Catkin workspace**</span>: `catkin_ws`
+- **ROS**: tested on [ROS Melodic](http://wiki.ros.org/melodic/Installation/Ubuntu) (Ubuntu     18.04)
+- **PX4 Firmware**: tested on v10.0.1 - setup [here](https://github.com/congtranv/px4_insta    ll)
+- **Catkin workspace**: `catkin_ws`
   ```
   ## create a workspace if you've not had one
   mkdir -p [path/to/ws]/catkin_ws/src
   cd [path/to/ws]/catkin_ws
-  catkin_init_workspace
-  rosdep install --from-paths src --ignore-src -y 
+  ```                                                                                      
+  ```
+  catkin init
+  catkin config --extend /opt/ros/melodic
+  catkin config --cmake-args -DCMAKE_BUILD_TYPE=Release
+  catkin config --merge-devel
   catkin build
   ```
-- <span style="color:orange">**MAVROS**</span>          : binary installation - setup [here](https://docs.px4.io/master/en/ros/mavros_installation.html#binary-installation-debian-ubuntu)
+- **MAVROS**: binary installation - setup [here](https://docs.px4.io/master/en/ros/mavros_i    nstallation.html#binary-installation-debian-ubuntu)
 
-- <span style="color:orange">**OFFBOARD**</span>
+- **OFFBOARD**
   ```
-  cd [path/to/ws]/catkin_ws/src
-  git clone https://github.com/congtranv/offboard.git
+  copy offboard [path/to/ws]/catkin_ws/src
+  ```
+  ```
   cd [path/to/ws]/catkin_ws
   catkin build offboard
   ```
-
 ## Usage
 ***
 ### <span style="color:green">*Before run OFFBOARD node, check and modify (if need) the value of parameters in* **launch/offboard.launch**
